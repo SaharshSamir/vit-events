@@ -1,18 +1,18 @@
 const {Document} = require('mongoose');
 
 export interface student {
-    firstName: String,
-    lastName: String,
-    userName: String,
-    email: String,
-    password: String,
-    watchList?: Array<String>,
-    registeredEvents?: Array<String>
+    firstName: string,
+    lastName: string,
+    userName: string,
+    email: string,
+    password: string,
+    watchList?: Array<string>,
+    registeredEvents?: Array<string>
 }
 
 export interface organizer{
-    name: String,
-    email: String,
-    password: String,
-    events?: Array<String>
+    name: string,
+    email: string,
+    password: string,
+    events?: Array<string>
 }

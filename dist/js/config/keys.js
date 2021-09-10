@@ -1,5 +1,7 @@
-if(process.env.NODE_ENV === "production"){
+"use strict";
+if (process.env.NODE_ENV === "production") {
     module.exports = require("./prod");
-}else{
+}
+else {
     module.exports = require("./dev");
 }

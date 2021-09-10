@@ -1,5 +1,5 @@
 export interface Event {
-    title: String,
-    description: String,
-    date: Date
+    title: string,
+    description: string,
+    date: number
 }

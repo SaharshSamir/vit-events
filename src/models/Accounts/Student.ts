@@ -8,7 +8,7 @@ const StudentSchema: Schema = new Schema({
     name: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},
-    registerdEvents: {type:Schema.Types.ObjectId, required: false}
+    registeredEvents: {type:Schema.Types.ObjectId, required: false}
 })
 
 
