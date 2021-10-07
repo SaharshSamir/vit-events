@@ -7,6 +7,10 @@ const StudentSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+<<<<<<< HEAD
     registeredEvents: { type: mongoose_1.Schema.Types.ObjectId, required: false }
+=======
+    registerdEvents: { type: mongoose_1.Schema.Types.ObjectId, required: false }
+>>>>>>> 04adf7f5fd6365694b5bff42a1f8c3989378d63a
 });
 (0, mongoose_1.model)("students", StudentSchema);
