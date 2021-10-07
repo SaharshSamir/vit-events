@@ -4,28 +4,30 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "concurrently \"tsc -w\" \"nodemon dist/js/server.js\"",
+    "server": "ts-node-dev --respawn --transpile-only src/server",
     "client": "npm run start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently -c \"bgMagenta,bgBlue,\" yarn:server yarn:client"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.7.13",
-    "bcrypt": "^5.0.1",
     "concurrently": "^6.2.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5",
-    "nodemon": "^2.0.12",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.2"
+    "nodemon": "^2.0.12"
   }
 }

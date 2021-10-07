@@ -1,9 +1,9 @@
 import express from 'express';
-const {organizationSignup, organizationLogin, test} = require('../../controllers/Auth/auth')
+const {organizationSignup, studentSignup, login} = require('../../controllers/Auth/auth')
 const Router = express.Router();
 
-Router.post("/organization/login", organizationLogin);
+Router.post("/login", login);
 Router.post("/organization/signup", organizationSignup);
-Router.get("/test", test);
+Router.post("/student/signup", studentSignup);
 
 module.exports = Router;

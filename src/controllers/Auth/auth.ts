@@ -1,39 +1,55 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import {organizer, student } from '../../types/Accounts';
-const {keys} = require('../../config/keys');
-const Organizer = mongoose.model("organizers");;
+import { organizer, student } from '../../types/Accounts';
+const { keys } = require('../../config/keys');
+const Organizer = mongoose.model("organizers");
+const Student = mongoose.model("students");
 
-const organizationLogin = async (req: Request, res: Response): Promise<Response> => {
-    console.log("login controller");
-    const {email, password} = req.body;
 
-    try {
+//login function for both student and organizer
+const login = async (req: Request, res: Response): Promise<Response> =>
+{
+    console.log("organization login controller");
+    const { type, email, password } = req.body;
 
-        const existingUser: any = await Organizer.findOne({email});
-        if(!existingUser) throw "Account doesn't exists";        
+    try
+    {
+        let existingUser: any;
+        if (type == "ORGANIZER")
+        {
+            existingUser = await Organizer.findOne({ email });
+        } else if (type == 'STUDENT')
+        {
+            existingUser = await Student.findOne({ email });
+        }
+
+        if (!existingUser) throw "Account doesn't exists";
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
-        if(!isPasswordCorrect) throw "Incorrect Credentials";
+        if (!isPasswordCorrect) throw "Incorrect Credentials";
 
-        const token = jwt.sign({id: existingUser._id}, keys.JWT_SECRET_KEY, {expiresIn: "20h"})
-        return res.status(200).json({existingUser, token});
+        const token = jwt.sign({ id: existingUser._id }, keys.JWT_SECRET_KEY, { expiresIn: "20h" })
+        return res.status(200).json({ user: existingUser, token });
 
-    } catch (e) {
-        return res.status(400).json({type: "error", message: e});
+    } catch (e)
+    {
+        return res.status(400).json({ type: "error", message: e });
     }
 
 }
 
-const organizationSignup = async (req: Request, res: Response): Promise<Response> => {
+//signup function for organizers
+const organizationSignup = async (req: Request, res: Response): Promise<Response> =>
+{
     console.log("sign up controller");
-    const {name, email, password} = req.body;
-    
-    try {
+    const { name, email, password } = req.body;
 
-        const existingUser = await Organizer.findOne({email});
-        if(existingUser) throw "Account already exists";
+    try
+    {
+
+        const existingUser = await Organizer.findOne({ email });
+        if (existingUser) throw "Account already exists";
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -46,25 +62,47 @@ const organizationSignup = async (req: Request, res: Response): Promise<Response
         let savedUser = await new Organizer(newUser).save();
         console.log(savedUser);
 
-        const token = jwt.sign({id: savedUser._id}, keys.JWT_SECRET_KEY, {expiresIn: "20h"});
+        const token = jwt.sign({ id: savedUser._id }, keys.JWT_SECRET_KEY, { expiresIn: "20h" });
 
-        return res.status(200).json({savedUser, token});
-    } catch (e) {
-        
+        return res.status(200).json({ user: savedUser, token });
+    } catch (e)
+    {
+
         console.error(e);
-        return res.status(400).json({type: "error", message: e});
+        return res.status(400).json({ type: "error", message: e });
 
     }
+}
 
+//signup function for students
+const studentSignup = async (req: Request, res: Response): Promise<Response> =>
+{
+    let { firstName, lastName, email, password } = req.body;
 
+    try
+    {
+        const existingUser = await Student.findOne({ email });
+        if (existingUser) throw "Account already exists";
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const newUser = {
+            firstName,
+            lastName,
+            name: `${firstName} ${lastName}`,
+            email,
+            password: hashedPassword
+        }
+        const savedUser = await new Student(newUser).save();
+        const token = jwt.sign({ id: savedUser._id }, keys.JWT_SECRET_KEY, { expiresIn: "20h" });
+
+        return res.status(200).json({ token });
+    } catch (e)
+    {
+        console.error(e);
+        return res.status(400).json({ type: "error", message: e });
+    }
 }
 
 
-const test = (req: Request, res: Response): Response => {
-    return res.status(200).json({message: "test"});
-}
-
-
-exports.organizationLogin = organizationLogin;
+exports.login = login;
 exports.organizationSignup = organizationSignup;
-exports.test = test;
+exports.studentSignup = studentSignup;
