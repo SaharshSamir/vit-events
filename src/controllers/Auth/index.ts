@@ -9,7 +9,7 @@ const Student = mongoose.model("students");
 
 
 //login function for both student and organizer
-const login = async (req: Request, res: Response): Promise<Response> =>
+export const login = async (req: Request, res: Response): Promise<Response> =>
 {
     console.log("organization login controller");
     const { type, email, password } = req.body;
@@ -40,7 +40,7 @@ const login = async (req: Request, res: Response): Promise<Response> =>
 }
 
 //signup function for organizers
-const organizationSignup = async (req: Request, res: Response): Promise<Response> =>
+export const organizationSignup = async (req: Request, res: Response): Promise<Response> =>
 {
     console.log("sign up controller");
     const { name, email, password } = req.body;
@@ -75,7 +75,7 @@ const organizationSignup = async (req: Request, res: Response): Promise<Response
 }
 
 //signup function for students
-const studentSignup = async (req: Request, res: Response): Promise<Response> =>
+export const studentSignup = async (req: Request, res: Response): Promise<Response> =>
 {
     let { firstName, lastName, email, password } = req.body;
 
@@ -103,6 +103,6 @@ const studentSignup = async (req: Request, res: Response): Promise<Response> =>
 }
 
 
-exports.login = login;
-exports.organizationSignup = organizationSignup;
-exports.studentSignup = studentSignup;
+// exports.login = login;
+// exports.organizationSignup = organizationSignup;
+// exports.studentSignup = studentSignup;
