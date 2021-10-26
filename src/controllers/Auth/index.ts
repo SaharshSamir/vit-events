@@ -30,7 +30,7 @@ export const login = async (req: Request, res: Response): Promise<Response> =>
         if (!isPasswordCorrect) throw "Incorrect Credentials";
 
         const token = jwt.sign({ id: existingUser._id }, keys.JWT_SECRET_KEY, { expiresIn: "20h" })
-        return res.status(200).json({ user: existingUser, token });
+        return res.status(200).json({ token });
 
     } catch (e)
     {
