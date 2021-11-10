@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
-import Nav from "../components/Nav";
 
 
 const Login=()=>{

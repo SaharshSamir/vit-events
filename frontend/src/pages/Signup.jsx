@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 
-import { Link,Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //actions
 
@@ -75,7 +75,6 @@ left:50%;
 transform: translate(-50%,-50%);
 background-color: #EEEFF7;
 border-bottom: 8px solid #6470C4;
-padding: 1rem;
 border-radius: 1rem;
 @media screen and (max-width:680px){
     width: 80%;
