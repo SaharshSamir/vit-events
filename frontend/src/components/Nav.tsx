@@ -3,17 +3,19 @@ import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
-import logo from "../images/logo.png"; 
+import { useLocation } from "react-router";
+import vitlogo from "../images/vitlogo.png";
 
 const Nav: React.FC=()=>{
 
-    const path=window.location.href.split("/")[3];
+    const location=useLocation();
+    const path=location.pathname;
     console.log(path);
     return (
-        <NavStyled >
+        <NavStyled style={ path!=="/" ? {background: "black", color: "white"}:{}} >
             <div className="left">
                 <div className="logo">
-                    <img  src={logo} alt="" />
+                    <img  src={vitlogo} alt="" />
                 </div>
             </div>
             <div className="right">
@@ -21,7 +23,7 @@ const Nav: React.FC=()=>{
                     <h4>About Us</h4>
                 </div>
                 <div className="loginSignup">
-                    <h4><Link to="/login">Login </Link> or<span>Signup</span></h4>
+                    <h4><Link style={ path!=="/" ? {background: "black", color: "white"}:{}} to="/login">Login </Link><span>or</span><Link style={ path!=="/" ? {background: "black", color: "white"}:{}} to="/signup">Signup</Link></h4>
                 </div>
             </div>
         </NavStyled>
@@ -32,7 +34,9 @@ const NavStyled=styled.div`
 display: flex;
 align-items: center;
 justify-content: space-between;
+position: relative;
 border-radius: 0 0 1rem 1rem;
+z-index: 2;
 a{
     text-decoration: none;
     color:black;
@@ -44,17 +48,12 @@ img{
 }
 .right {
     display: flex;
-    justify-content: space-between !important;
+    justify-content: space-evenly !important;
     align-items: center;
-    .aboutus{
-        margin: 0rem 20rem 0rem 0rem;
+    *{
+        margin-right:2rem ;
     }
-    h4{
-        span{
-            margin: 1rem;
-        }
-    }
-    align-items: center;
+    
 }
 
 `
