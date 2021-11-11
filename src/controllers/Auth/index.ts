@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { organizer, student } from '../../types/Accounts';
-const { keys } = require('../../config/keys');
+// const { keys } = require('../../config/keys');
+require("dotenv").config();
 const Organizer = mongoose.model("organizers");
 const Student = mongoose.model("students");
 
@@ -29,7 +30,9 @@ export const login = async (req: Request, res: Response): Promise<Response> =>
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
         if (!isPasswordCorrect) throw "Incorrect Credentials";
 
-        const token = jwt.sign({ id: existingUser._id }, keys.JWT_SECRET_KEY, { expiresIn: "20h" })
+        let jwt_secret = process.env.JWT_SECRET_KEY || "";
+
+        const token = jwt.sign({ id: existingUser._id }, jwt_secret, { expiresIn: "20h" })
         return res.status(200).json({ user: existingUser, token });
 
     } catch (e)
@@ -62,7 +65,8 @@ export const organizationSignup = async (req: Request, res: Response): Promise<R
         let savedUser = await new Organizer(newUser).save();
         console.log(savedUser);
 
-        const token = jwt.sign({ id: savedUser._id }, keys.JWT_SECRET_KEY, { expiresIn: "20h" });
+        let jwt_secret = process.env.JWT_SECRET_KEY || "";
+        const token = jwt.sign({ id: savedUser._id }, jwt_secret, { expiresIn: "20h" });
 
         return res.status(200).json({ user: savedUser, token });
     } catch (e)
@@ -92,7 +96,8 @@ export const studentSignup = async (req: Request, res: Response): Promise<Respon
             password: hashedPassword
         }
         const savedUser = await new Student(newUser).save();
-        const token = jwt.sign({ id: savedUser._id }, keys.JWT_SECRET_KEY, { expiresIn: "20h" });
+        let jwt_secret = process.env.JWT_SECRET_KEY || "";
+        const token = jwt.sign({ id: savedUser._id }, jwt_secret, { expiresIn: "20h" });
 
         return res.status(200).json({ token });
     } catch (e)
