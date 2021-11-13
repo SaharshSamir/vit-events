@@ -12,7 +12,7 @@ require("dotenv").config();
 mongoose.Promise = global.Promise;
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 mongoose.connect(process.env.MONGO_URI).then(() =>
 {
