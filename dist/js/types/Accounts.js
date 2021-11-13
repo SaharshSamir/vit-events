@@ -1,3 +1,3 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { Document } = require('mongoose');
+const { Document } = require("mongoose");

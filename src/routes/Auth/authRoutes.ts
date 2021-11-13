@@ -1,6 +1,10 @@
-import express from 'express';
+import express from "express";
 // const { organizationSignup, studentSignup, login } = require('../../controllers/Auth');
-import { organizationSignup, studentSignup, login } from '../../controllers/Auth';
+import {
+  organizationSignup,
+  studentSignup,
+  login,
+} from "../../controllers/Auth";
 const Router = express.Router();
 
 //organizer auth

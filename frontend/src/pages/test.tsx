@@ -1,12 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const test = () =>
-{
-    return (
-        <h1>
-            This is a test to see if test is testing or not.
-        </h1>
-    )
-}
+const Test = () => {
+	return (
+		<>
+			<Container></Container>
+		</>
+	);
+};
 
-export default test;
+const Container = styled.div``;
+
+export default Test;
