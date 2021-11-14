@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "server": "ts-node-dev --respawn --transpile-only src/server",
-    "client": "npm run start --prefix frontend",
+    "frontend": "npm run start --prefix frontend",
     "dev": "concurrently -c \"bgMagenta,bgBlue,\" yarn:server yarn:client"
   },
   "keywords": [],
