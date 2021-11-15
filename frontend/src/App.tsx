@@ -4,8 +4,8 @@ import Nav from './components/Nav';
 import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/Signup';
-import test from './pages/test';
 import Test from './pages/test';
+import Dashboard from './pages/Dashboard';
 
 const App: React.FC = () => {
 	return (
@@ -16,6 +16,7 @@ const App: React.FC = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/test" element={<Test />} />
+				<Route path="/dashboard" element={<Dashboard />} />
 			</Routes>
 		</>
 	);
