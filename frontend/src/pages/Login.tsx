@@ -2,18 +2,27 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import { LoginAction } from '../Actions/Auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const auth = useSelector((store: any) => store.Auth);
 	const [formData, setFormData] = useState({
 		email: '',
-		password: ''
+		password: '',
+		type: ''
 	});
 	const inputHandler = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
-	const { email, password } = formData;
+	const { type, email, password } = formData;
 	const submitHandler = async (e) => {
 		e.preventDefault();
+		console.log(formData);
+		dispatch(LoginAction({ type, email, password }, navigate));
 	};
 
 	return (
@@ -43,7 +52,29 @@ const Login = () => {
 							required
 						/>
 					</div>
-
+					<div className="StudOrgan">
+						<input
+							onChange={(e) => inputHandler(e)}
+							type="radio"
+							placeholder="password"
+							id="stud"
+							name="type"
+							value="STUDENT"
+						/>
+						<label htmlFor="stud">Student?</label>
+						<input
+							onChange={(e) => inputHandler(e)}
+							type="radio"
+							placeholder="password"
+							id="organization"
+							name="type"
+							value="ORGANIZER"
+						/>
+						<label htmlFor="organization">Organizer?</label>
+					</div>
+					<div className="message">
+						{auth.message && <h5>{auth.message}</h5>}
+					</div>
 					<div className="submit">
 						<button onChange={(e) => inputHandler(e)} type="submit">
 							Login
@@ -111,6 +142,9 @@ const SignUpStyle = styled.div`
 			text-decoration: none;
 			color: #6470c4;
 		}
+	}
+	.StudOrgan {
+		padding: 1rem;
 	}
 `;
 export default Login;

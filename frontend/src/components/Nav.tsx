@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import styled from 'styled-components';
-
 import { useLocation } from 'react-router';
 import vitlogo from '../images/vitlogo.png';
+import { useSelector } from 'react-redux';
 
 const Nav: React.FC = () => {
 	const location = useLocation();
+	const auth = useSelector((store: any) => store.Auth);
 	const path = location.pathname;
 	console.log(path);
 	return (
@@ -22,25 +22,27 @@ const Nav: React.FC = () => {
 				<div className="aboutus">
 					<h4>About Us</h4>
 				</div>
-				<div className="loginSignup">
-					<h4>
-						<Link
-							style={
-								path !== '/' ? { background: 'black', color: 'white' } : {}
-							}
-							to="/login">
-							Login{' '}
-						</Link>
-						<span>or</span>
-						<Link
-							style={
-								path !== '/' ? { background: 'black', color: 'white' } : {}
-							}
-							to="/signup">
-							Signup
-						</Link>
-					</h4>
-				</div>
+				{!auth.isAuthenticated && (
+					<div className="loginSignup">
+						<h4>
+							<Link
+								style={
+									path !== '/' ? { background: 'black', color: 'white' } : {}
+								}
+								to="/login">
+								Login{' '}
+							</Link>
+							<span>or</span>
+							<Link
+								style={
+									path !== '/' ? { background: 'black', color: 'white' } : {}
+								}
+								to="/signup">
+								Signup
+							</Link>
+						</h4>
+					</div>
+				)}
 			</div>
 		</NavStyled>
 	);

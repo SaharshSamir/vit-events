@@ -9,6 +9,7 @@ import slide3 from '../images/slide3.jpeg';
 import slide4 from '../images/slide4.jpeg';
 import slide5 from '../images/slide5.jpeg';
 import { Link } from 'react-router-dom';
+
 const Slide: React.FC = () => {
 	var settings = {
 		dots: true,

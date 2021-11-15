@@ -83,7 +83,9 @@ export const studentSignup = async (
 
   try {
     const existingUser = await Student.findOne({ email });
-    if (existingUser) throw "Account already exists";
+    if (existingUser) {
+      return res.status(400).json({ message: "account exists" });
+    }
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = {
       firstName,

@@ -1,33 +1,42 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import { studentSignup } from '../Actions/Auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 //actions
 
 const SignUp = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const auth = useSelector((store: any) => store.Auth);
+
 	const [formData, setFormData] = useState({
-		firstname: '',
-		lastname: '',
+		firstName: '',
+		lastName: '',
 		email: '',
 		password: '',
 		password2: ''
 	});
-	const { firstname, lastname, email, password, password2 } = formData;
+	const [passCheck, setPassCheck] = useState(false);
+	const { firstName, lastName, email, password, password2 } = formData;
 	const inputHandler = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		if (password !== password2) {
-			console.log('not equal password');
+			setPassCheck(true);
+			return;
 		}
 		console.log({
-			firstname,
-			lastname,
+			firstName,
+			lastName,
 			email,
 			password
 		});
+		dispatch(studentSignup({ firstName, lastName, email, password }, navigate));
 	};
 
 	return (
@@ -41,7 +50,8 @@ const SignUp = () => {
 						type="text"
 						placeholder="First Name"
 						id="name"
-						name="firstname"
+						name="firstName"
+						required
 					/>
 				</div>
 				<div className="name">
@@ -50,16 +60,18 @@ const SignUp = () => {
 						type="text"
 						placeholder="last name"
 						id="name"
-						name="lastname"
+						name="lastName"
+						required
 					/>
 				</div>
 				<div className="email">
 					<input
 						onChange={(e) => inputHandler(e)}
-						type=""
+						type="email"
 						placeholder="email"
 						id="email"
 						name="email"
+						required
 					/>
 				</div>
 				<div className="password">
@@ -69,6 +81,7 @@ const SignUp = () => {
 						placeholder="password"
 						id="password"
 						name="password"
+						required
 					/>
 				</div>
 				<div className="password2">
@@ -78,8 +91,13 @@ const SignUp = () => {
 						placeholder="Confirm Password"
 						id="password2"
 						name="password2"
+						required
 					/>
 				</div>
+				{auth.alreadyExists && !auth.isLoading && (
+					<h5 style={{ color: 'red' }}> Account already exists </h5>
+				)}
+				{passCheck && <h5 style={{ color: 'red' }}>Password did not match</h5>}
 				<div className="submit">
 					<button onChange={(e) => inputHandler(e)} type="submit">
 						Sign Up
