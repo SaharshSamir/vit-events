@@ -12,7 +12,7 @@ Router.post("/organization/login", login);
 Router.post("/organization",   organizationAuth);
 
 //student auth
-// Router.post("student/login", studentLogin)
+Router.post("/student/login", login);
 Router.post("/student/signup", studentSignup);
 
 module.exports = Router;
