@@ -3,26 +3,30 @@ import styled from 'styled-components';
 import { Magic } from 'magic-sdk';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router';
 
 const Test: React.FC = () => {
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({ email: '' });
 	const inputHandler = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 	const submitHandler = async (e) => {
 		e.preventDefault();
-
-		if (process.env.MAGIC_PUBLISHABLE_KEY) {
+		console.log(process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY);
+		if (process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY) {
 			const did: string | null = await new Magic(
-				process.env.MAGIC_PUBLISHABLE_KEY
+				process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY
 			).auth.loginWithMagicLink({ email: formData.email });
 
-			const res = await axios.post('/auth', {
+			const res = await axios.post('/auth/organization', {
 				headers: {
 					Authorization: `BEARER ${did}`
 				}
 			});
-
+			if (res.data.ok) {
+				navigate('/dashboard');
+			}
 			console.log(res.data);
 		}
 		console.log(formData);
@@ -43,6 +47,7 @@ const Test: React.FC = () => {
 			<Container>
 				<HeaderContainer>
 					<Header>Organization Sign Up</Header>
+					{JSON.stringify(process.env)}
 				</HeaderContainer>
 				<FormContainer onSubmit={submitHandler}>
 					<Label>Email</Label>

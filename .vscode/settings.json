@@ -3,4 +3,5 @@
   "editor.formatOnSave": true,
   "eslint.alwaysShowStatus": true,
   "editor.hover.enabled": true,
+  "files.eol": "\n"
 }

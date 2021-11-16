@@ -51,7 +51,7 @@ export const organizationAuth = async (req, res) => {
   console.log(req.body);
   console.log("req.headers: \n")
   console.log(req.headers);
-  const did : string | undefined = magic.utils.parseAuthorizationHeader(req.headers.Aurthorization);
+  const did = magic.utils.parseAuthorizationHeader(req.body.headers.Authorization);
   let user;
 
   try {
