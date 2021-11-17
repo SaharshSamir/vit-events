@@ -8,7 +8,7 @@ import {
 import setToken from '../utils/setToken';
 
 export const loadUser = () => async (dispatch) => {
-	setToken(localStorage.getItem('token'));
+	setToken(localStorage.getItem('token'), axios);
 };
 export const studentSignup = (formdata, navigate) => async (dispatch) => {
 	try {
@@ -29,7 +29,7 @@ export const studentSignup = (formdata, navigate) => async (dispatch) => {
 			type: STUDENT_SIGNUP,
 			payload: res.data.token
 		});
-		navigate('/');
+		navigate('/dashboard/student');
 	} catch (error: any) {
 		if (error.response.data.message) {
 			console.log('account exists');
@@ -62,7 +62,7 @@ export const LoginAction = (formdata, navigate) => async (dispatch) => {
 			type: LOGIN,
 			payload: res.data.token
 		});
-		navigate('/');
+		navigate('/dashboard/student');
 	} catch (error: any) {
 		console.log(error.response.data.message);
 		dispatch({

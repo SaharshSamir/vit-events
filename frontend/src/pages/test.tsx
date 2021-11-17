@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router';
 
 const Test: React.FC = () => {
 	const navigate = useNavigate();
+	if (document.cookie && document.cookie.includes('authed')) {
+		console.log('hey');
+		window.location.href = '/dashboard';
+	}
 	const [formData, setFormData] = useState({ email: '' });
 	const inputHandler = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,15 +38,11 @@ const Test: React.FC = () => {
 	return (
 		<>
 			<Helmet>
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `
-					if(document.cookie && document.cookie.includes('authed')) {
-						window.location.href = "/dashboard"
+				<script>
+					{
+						"if(document.cookie && document.cookie.includes('authed')) {window.location.href = '/dashboard'}"
 					}
-				`
-					}}
-				/>
+				</script>
 			</Helmet>
 			<Container>
 				<HeaderContainer>

@@ -23,5 +23,6 @@ export const setTokenCookie = (res, token) => {
 }
 
 export const getAuthToken = (cookies) => {
+    console.log(cookies);
     return cookies[TOKEN_NAME]
 }

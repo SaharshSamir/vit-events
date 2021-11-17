@@ -11,6 +11,6 @@ export interface student {
 export interface organizer {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   posts?: Array<string>;
 }

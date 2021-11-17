@@ -5,12 +5,14 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/Signup';
 import Test from './pages/test';
-import Dashboard from './pages/Dashboard';
+import OrganizerDashboard from './pages/OrganizerDashboard';
 import setToken from './utils/setToken';
+import StudentDashboard from './pages/StudentDashboard';
+import axios from 'axios';
 
 const App: React.FC = () => {
 	useEffect(() => {
-		setToken(localStorage.getItem('token'));
+		setToken(localStorage.getItem('token'), axios);
 	}, []);
 	return (
 		<>
@@ -20,7 +22,8 @@ const App: React.FC = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/test" element={<Test />} />
-				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/dashboard/organizer" element={<OrganizerDashboard />} />
+				<Route path="/dashboard/student" element={<StudentDashboard />} />
 			</Routes>
 		</>
 	);
