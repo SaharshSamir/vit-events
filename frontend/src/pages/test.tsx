@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Magic } from 'magic-sdk';
-import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router';
+import API from '../utils/Api';
 
 const Test: React.FC = () => {
 	const navigate = useNavigate();
 	if (document.cookie && document.cookie.includes('authed')) {
 		console.log('hey');
-		window.location.href = '/dashboard';
+		window.location.href = '/dashboard/organizer';
 	}
 	const [formData, setFormData] = useState({ email: '' });
 	const inputHandler = (e) => {
@@ -23,13 +23,13 @@ const Test: React.FC = () => {
 				process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY
 			).auth.loginWithMagicLink({ email: formData.email });
 
-			const res = await axios.post('/auth/organization', {
+			const res = await API.post('/auth/organization', {
 				headers: {
 					Authorization: `BEARER ${did}`
 				}
 			});
 			if (res.data.ok) {
-				navigate('/dashboard');
+				navigate('/dashboard/organizer');
 			}
 			console.log(res.data);
 		}
@@ -52,7 +52,7 @@ const Test: React.FC = () => {
 				<FormContainer onSubmit={submitHandler}>
 					<Label>Email</Label>
 					<InputField name="email" onChange={inputHandler} />
-					<SubmitButton>Submit</SubmitButton>
+					<SubmitButton type="submit">Submit</SubmitButton>
 				</FormContainer>
 			</Container>
 		</>

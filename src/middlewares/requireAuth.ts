@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken'
 
 export const requrieCookieAuth = (req, res, next) => {
     const token = getAuthToken(req.cookies);
+    console.log(`token: ${token} \n req object: `);
+    console.log(req);
     const jwtSecret = process.env.JWT_SECRET_KEY || "";
     if(token){
         const decoded = jwt.verify(token, jwtSecret);

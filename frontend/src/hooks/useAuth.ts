@@ -1,7 +1,6 @@
 import useSwr from 'swr';
-import axios from 'axios';
 import setToken from '../utils/setToken';
-import { Error } from 'mongoose';
+import API from '../utils/Api';
 
 async function fetcher(route) {
 	// return axios
@@ -10,7 +9,7 @@ async function fetcher(route) {
 	// 	.then((user) => user || null);
 	let globalError;
 	try {
-		const res = await axios.get(route);
+		const res = await API.get(route);
 		console.log(res);
 		if (!res.data.ok || res.status > 299 || res.status < 200) {
 			const err = new Error('An error occured while fetching the data');
@@ -44,7 +43,7 @@ export function useAuth() {
 
 export function useStudentAuth() {
 	console.log(localStorage.getItem('token'));
-	setToken(localStorage.getItem('token'), axios);
+	setToken(localStorage.getItem('token'));
 	const { data: user, error } = useSwr('/profile/student', fetcher);
 	const loading = user === undefined;
 

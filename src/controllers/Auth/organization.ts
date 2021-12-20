@@ -1,5 +1,5 @@
 import {getAuthToken, setTokenCookie} from '../../utils/cookieStuff';
-import {Magic} from '@magic-sdk/admin';
+import {Magic, MagicUserMetadata} from '@magic-sdk/admin';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 
@@ -16,7 +16,7 @@ export const organizationAuth = async (req, res) => {
     console.log("req.headers: \n")
     console.log(req.headers);
     const did = magic.utils.parseAuthorizationHeader(req.body.headers.Authorization);
-    let user;
+    let user: MagicUserMetadata;
   
     try {
       user = await magic.users.getMetadataByToken(did);
@@ -30,8 +30,8 @@ export const organizationAuth = async (req, res) => {
     let savedOrganizer;
     if(!existingOrganizer){
         const newOrganizer: organizer = {
-            email: user.email,
-            name: user.email
+            email: user.email as string,
+            name: user.email as string
         } 
         savedOrganizer = await new Organizer(newOrganizer).save();
     }

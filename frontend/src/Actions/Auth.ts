@@ -1,4 +1,4 @@
-import axios from 'axios';
+import API from '../utils/Api';
 import {
 	STUDENT_SIGNUP,
 	USER_EXISTS,
@@ -8,7 +8,7 @@ import {
 import setToken from '../utils/setToken';
 
 export const loadUser = () => async (dispatch) => {
-	setToken(localStorage.getItem('token'), axios);
+	setToken(localStorage.getItem('token'));
 };
 export const studentSignup = (formdata, navigate) => async (dispatch) => {
 	try {
@@ -18,8 +18,8 @@ export const studentSignup = (formdata, navigate) => async (dispatch) => {
 				'content-type': 'application/json'
 			}
 		};
-		const res = await axios.post(
-			'http://localhost:5000/auth/student/signup',
+		const res = await API.post(
+			'http://vit-events-api:8000/auth/student/signup',
 			body,
 			config
 		);
@@ -31,7 +31,8 @@ export const studentSignup = (formdata, navigate) => async (dispatch) => {
 		});
 		navigate('/dashboard/student');
 	} catch (error: any) {
-		if (error.response.data.message) {
+		console.log(error);
+		if (error?.response?.data?.message) {
 			console.log('account exists');
 			dispatch({
 				type: USER_EXISTS
@@ -51,8 +52,8 @@ export const LoginAction = (formdata, navigate) => async (dispatch) => {
 				'content-type': 'application/json'
 			}
 		};
-		const res = await axios.post(
-			'http://localhost:5000/auth/student/login',
+		const res = await API.post(
+			'http://vit-events-api:8000/auth/student/login',
 			body,
 			config
 		);

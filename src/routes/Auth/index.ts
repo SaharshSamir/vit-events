@@ -10,6 +10,9 @@ const Router = express.Router();
 //organizer auth
 Router.post("/organization/login", login);
 Router.post("/organization",   organizationAuth);
+Router.get("/test", (req, res) => {
+  res.json({test:"succeeded 😎"})
+})
 
 //student auth
 Router.post("/student/login", login);

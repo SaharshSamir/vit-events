@@ -16,7 +16,7 @@ export const createCookie = (name, data, options = {}) => {
 }
 
 export const setTokenCookie = (res, token) => {
-    res.setHeader('set-cookie', [
+    res.setHeader('Set-Cookie', [
         createCookie(TOKEN_NAME, token),
         createCookie('authed', true, {httpOnly: false})
     ])

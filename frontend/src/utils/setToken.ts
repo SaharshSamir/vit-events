@@ -1,10 +1,18 @@
-// import axios from 'axios';
+import API from './Api';
 
-const setToken = (token, axios) => {
+// const setToken = (token, axios) => {
+// 	if (token) {
+// 		axios.defaults.headers.common['Authorization'] = `BEARER ${token}`;
+// 	} else {
+// 		delete axios.defaults.headers.common['Authorization'];
+// 	}
+// };
+
+const setToken = (token) => {
 	if (token) {
-		axios.defaults.headers.common['Authorization'] = `BEARER ${token}`;
+		API.defaults.headers.common['Authorization'] = `BEARER ${token}`;
 	} else {
-		delete axios.defaults.headers.common['Authorization'];
+		delete API.defaults.headers.common['Authorization'];
 	}
 };
 export default setToken;
