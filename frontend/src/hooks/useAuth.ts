@@ -1,6 +1,7 @@
 import useSwr from 'swr';
 import setToken from '../utils/setToken';
 import API from '../utils/Api';
+import axios from 'axios';
 
 async function fetcher(route) {
 	// return axios
@@ -9,7 +10,11 @@ async function fetcher(route) {
 	// 	.then((user) => user || null);
 	let globalError;
 	try {
-		const res = await API.get(route);
+		const res = await axios.get(route, {
+			headers: {
+				'Access-Control-Allow-Origin': 'http://localhost:3000'
+			}
+		});
 		console.log(res);
 		if (!res.data.ok || res.status > 299 || res.status < 200) {
 			const err = new Error('An error occured while fetching the data');

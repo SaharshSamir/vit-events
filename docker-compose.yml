@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: vit-events-api
+    # image: vit-events-api
     # container_name: vit-events-api
     command: yarn server
     env_file:
@@ -21,8 +21,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: vit-events-web-app
-    container_name: vit-events-web-app
+    # image: vit-events-web-app
+    # container_name: vit-events-web-app
     env_file:
       - .env
     expose:

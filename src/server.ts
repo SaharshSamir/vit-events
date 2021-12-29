@@ -25,7 +25,13 @@ mongoose
     console.log(e);
   });
 
-app.use(cors());
+  https://expressjs.com/en/resources/middleware/cors.html
+app.options('*', cors());
+app.use(cors({
+  credentials: true,
+  origin: false,
+  exposeHeaders: ["set-cookie"]
+}));
 app.use(cookies());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));

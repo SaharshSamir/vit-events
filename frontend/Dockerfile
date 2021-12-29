@@ -4,7 +4,8 @@ RUN apk add g++ make py3-pip
 
 WORKDIR /app/frontend
 
-COPY package*.json .
+COPY package.json .
+COPY yarn.lock .
 
 EXPOSE 3000
 

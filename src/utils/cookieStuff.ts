@@ -16,10 +16,12 @@ export const createCookie = (name, data, options = {}) => {
 }
 
 export const setTokenCookie = (res, token) => {
-    res.setHeader('Set-Cookie', [
-        createCookie(TOKEN_NAME, token),
-        createCookie('authed', true, {httpOnly: false})
-    ])
+    // res.setHeader('Access-Control-Expose-Headers', ['Set-Cookie']);
+    // res.setHeader('Set-Cookie', [
+    //     createCookie(TOKEN_NAME, token),
+    //     createCookie('authed', true, {httpOnly: false})
+    // ])
+    res.cookie('api_token', token);
 }
 
 export const getAuthToken = (cookies) => {

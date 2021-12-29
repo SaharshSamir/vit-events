@@ -2,6 +2,10 @@ import {model} from 'mongoose';
 import {Request, Response} from 'express';
 const Organizer = model('organizers') 
 
+export const test = (req, res) => {
+    res.send("hi");
+}
+
 export const getOrganizer = async (req, res: Response) : Promise<Response> => {
     // const userId = req.userId;
     // console.log(`req object:\n `);

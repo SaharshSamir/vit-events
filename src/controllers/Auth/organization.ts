@@ -12,6 +12,7 @@ const magic = new Magic(magicSecret);
 
 export const organizationAuth = async (req, res) => {
     console.log("req.body: \n")
+    res.removeHeader('Access-Control-Allow-Origin');
     console.log(req.body);
     console.log("req.headers: \n")
     console.log(req.headers);
@@ -39,7 +40,9 @@ export const organizationAuth = async (req, res) => {
     let jwt_secret = process.env.JWT_SECRET_KEY || "";
     const payload = savedOrganizer || existingOrganizer;
     const token: string = jwt.sign({userId: payload._id}, jwt_secret, {expiresIn: "20h"});
-    setTokenCookie(res, token);
+    // setTokenCookie(res, token);
+    res.cookie('api_token', token);
+    res.cookie('is_auth', true);
   
     return res.status(200).json({ok: true});
   

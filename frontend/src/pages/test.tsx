@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Magic } from 'magic-sdk';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router';
-import API from '../utils/Api';
+// import API from '../utils/Api';
+import axios from 'axios';
 
 const Test: React.FC = () => {
 	const navigate = useNavigate();
@@ -18,16 +19,24 @@ const Test: React.FC = () => {
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		console.log(process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY);
-		if (process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY) {
+		console.log(process.env);
+		if ('pk_live_72F52D0476CE882A') {
 			const did: string | null = await new Magic(
-				process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY
+				'pk_live_72F52D0476CE882A'
 			).auth.loginWithMagicLink({ email: formData.email });
 
-			const res = await API.post('/auth/organization', {
+			// const res = await API.post('/auth/organization', {
+			// 	headers: {
+			// 		Authorization: `BEARER ${did}`
+			// 	}
+			const res = await axios.post('/auth/organization', {
 				headers: {
+					'Access-Control-Allow-Origin': 'http://localhost:3000',
 					Authorization: `BEARER ${did}`
 				}
 			});
+			// });
+			console.log(res);
 			if (res.data.ok) {
 				navigate('/dashboard/organizer');
 			}
