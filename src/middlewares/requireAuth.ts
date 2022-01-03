@@ -4,16 +4,23 @@ import jwt from 'jsonwebtoken'
 
 export const requrieCookieAuth = (req, res, next) => {
     const token = getAuthToken(req.cookies);
-    console.log(`token: ${token} \n req object: `);
-    console.log(req);
     const jwtSecret = process.env.JWT_SECRET_KEY || "";
-    if(token){
-        const decoded = jwt.verify(token, jwtSecret);
-        req.userId = decoded;
-        req.userId = req.userId.userId;
-        console.log(`DECODED TOKEN: \n\n ${JSON.stringify(decoded)}`);
+    try {
+        if(token){
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userId = decoded;
+            req.userId = req.userId.userId;
+            console.log(`DECODED TOKEN: \n\n ${JSON.stringify(decoded)}`);
+        }
+        next();
+    } catch (error) {
+        console.log("Error in requireCookieAuth: ");
+        console.log(error)
+        return res.status(200).json({
+            ok: false,
+            error
+        })
     }
-    next();
 }
 
 export const requireTokenAuth = (req, res, next) => {

@@ -17,5 +17,5 @@ export const getOrganizer = async (req, res: Response) : Promise<Response> => {
     } catch (e) {
         console.log(`error from getOrganizer: ${JSON.stringify(e)}`)
     }
-    return res.status(200).json({organizerProfile});
+    return res.status(200).json({ok: true,organizerProfile});
 }

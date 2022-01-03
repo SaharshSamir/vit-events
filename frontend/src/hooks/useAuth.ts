@@ -1,47 +1,67 @@
-import useSwr from 'swr';
+import useSWR from 'swr';
 import setToken from '../utils/setToken';
-import API from '../utils/Api';
+// import API from '../utils/Api';
 import axios from 'axios';
+
+interface Data {
+	data: Object | undefined;
+	error: Object | undefined;
+}
 
 async function fetcher(route) {
 	// return axios
 	// 	.get(route)
 	// 	.then((res) => res.data.ok && res.data.json())
 	// 	.then((user) => user || null);
-	let globalError;
-	try {
-		const res = await axios.get(route, {
-			headers: {
-				'Access-Control-Allow-Origin': 'http://localhost:3000'
-			}
-		});
-		console.log(res);
-		if (!res.data.ok || res.status > 299 || res.status < 200) {
-			const err = new Error('An error occured while fetching the data');
-			err.message = await res.data;
-			console.log('got an error in fetcher');
-			console.log(JSON.stringify(err));
-			globalError = err;
+	const res = await axios.get(route, {
+		headers: {
+			'Access-Control-Allow-Origin': 'http://localhost:3000'
 		}
-		const user = await res.data;
-		return user;
-	} catch (error) {
-		console.log(error);
-		globalError = error;
+	});
+	console.log('just outside if');
+	console.log(res);
+	console.log(res.data.ok);
+	if (!res.data.ok) {
+		console.log('inside if');
+		const err = new Error(res.data.error.message);
+		err.message = res.data;
+		// return { user, err };
+		throw err;
 	}
-	if (globalError) {
-		throw globalError;
-	}
+	return res.data;
 }
 
-export function useAuth() {
-	const { data: user, error } = useSwr('/profile/organizer', fetcher);
-	console.log(`error return from useSwr = ${JSON.stringify(error)}`);
-	const loading = user === undefined;
+const fetchData = async () => {
+	const res = await axios.get('/profile/organizer');
+	console.log(res);
+	let response: Data = { data: {}, error: {} };
+	if (!res.data.ok) {
+		response.error = { err: res.data.error };
+		return response;
+	}
+	response.data = res.data;
+	console.log(res);
+	return response;
+};
+
+export async function getAuth() {
+	// const { data, error } = useSWR('/profile/organizer', fetcher, {
+	// 	onErrorRetry: () => {
+	// 		return;
+	// 	}
+	// });
+	// console.log(data);
+	// console.log(error);
+	// const user = data;
+	// console.log(`error return from useSwr = ${JSON.stringify(error)}`);
+	// const loading = user === undefined;
+	let { data, error } = await fetchData();
+	// data = Promise.resolve(data);
+	console.log(data);
 
 	return {
-		user,
-		loading,
+		user: data,
+		loading: data === undefined || error === undefined,
 		error
 	};
 }
@@ -49,7 +69,7 @@ export function useAuth() {
 export function useStudentAuth() {
 	console.log(localStorage.getItem('token'));
 	setToken(localStorage.getItem('token'));
-	const { data: user, error } = useSwr('/profile/student', fetcher);
+	const { data: user, error } = useSWR('/profile/student', fetcher);
 	const loading = user === undefined;
 
 	return {
