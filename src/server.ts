@@ -7,6 +7,7 @@ require("./models/Accounts/Organizer");
 require("./models/Accounts/Student");
 const authRoutes = require("./routes/Auth");
 const profileRoutes = require("./routes/profiles")
+const eventRoutes = require("./routes/Events")
 // import keys from './config/keys';
 // const {keys} =  require('./config/keys');
 require("dotenv").config();
@@ -16,6 +17,7 @@ mongoose.Promise = global.Promise;
 const app = express();
 const PORT = process.env.SERVER_PORT || 1000;
 
+console.log("here");
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -37,6 +39,8 @@ app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
+app.use("/event", eventRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Helllloooooo another change");

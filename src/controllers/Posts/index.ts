@@ -3,14 +3,14 @@ import {model, ObjectId} from 'mongoose';
 import { Event } from "../../types/Event";
 import { Document } from 'mongoose';
 
-const Organizer = model("organizer");
+const Organizer = model("organizers");
 const Event = model("events");
 
 type EventType = Event | Document<any, any, unknown> & {
     _id: ObjectId
 }
 
-export const createPost = async (req: any, res: any) => {
+export const createEvent = async (req: any, res: any) => {
     const {title, description, date} = req.body;
     const organizer_id = req.userId;
     try {
