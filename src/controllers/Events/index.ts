@@ -32,3 +32,27 @@ export const createEvent = async (req: any, res: any) => {
         return res.status(200).json({ok: false, error})
     }
 }
+
+export const getClubEvents = async (req: any, res: any) => {
+    const {club} = req.query.params;
+    try {
+        const clubEvents = await Event.find({name: club});
+        return res.status(200).json({ok: true, clubEvents: clubEvents});
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({ok: false, error})
+    }
+}
+
+
+export const getAllEvents = async (req: any, res: any) => {
+    const {reqCount}  = req.body || 1;
+
+    try {
+        const allEvents = await Event.find({}).limit(5).skip(reqCount * 5);
+        return res.status(200).json({ok: true, allEvents: allEvents})
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({ok: false, error})
+    }
+}

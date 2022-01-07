@@ -11,6 +11,13 @@ export interface student {
 export interface organizer {
   name: string;
   email: string;
+  contactEmail: string,
+  socials?: {
+    instagram?: string,
+    facebook?: string,
+    twitter?: string,
+    discord?: string
+  }
   password?: string;
   posts?: Array<string>;
 }

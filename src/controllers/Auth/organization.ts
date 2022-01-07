@@ -32,7 +32,8 @@ export const organizationAuth = async (req, res) => {
     if(!existingOrganizer){
         const newOrganizer: organizer = {
             email: user.email as string,
-            name: user.email as string
+            name: user.email as string,
+            contactEmail: user.email as string
         } 
         savedOrganizer = await new Organizer(newOrganizer).save();
     }
