@@ -3,6 +3,7 @@ import { useStudentAuth } from '../hooks/useAuth';
 
 const StudentDashboard: React.FC = () => {
 	const { user, loading, error } = useStudentAuth();
+	console.log(user);
 	return (
 		<React.Fragment>
 			<h1>Student Dashboard</h1>

@@ -1,4 +1,10 @@
-import { AUTH_ERROR, STUDENT_SIGNUP, USER_EXISTS, LOGIN } from './type';
+import {
+	AUTH_ERROR,
+	STUDENT_SIGNUP,
+	USER_EXISTS,
+	LOGIN,
+	LOAD_USER
+} from './type';
 
 const initialState = {
 	token: localStorage.getItem('token'),
@@ -16,6 +22,15 @@ export const Auth = (state = initialState, action) => {
 			return {
 				...state,
 				token: action.payload,
+				isAuthenticated: true,
+				isLoading: false,
+				alreadyExists: false,
+				message: ''
+			};
+		case LOAD_USER:
+			return {
+				...state,
+				user: action.payload.organizerProfile,
 				isAuthenticated: true,
 				isLoading: false,
 				alreadyExists: false,

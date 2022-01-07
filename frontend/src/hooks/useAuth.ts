@@ -19,7 +19,7 @@ async function fetcher(route) {
 		}
 	});
 	console.log('just outside if');
-	console.log(res);
+	console.log(res.data.data);
 	console.log(res.data.ok);
 	if (!res.data.ok) {
 		console.log('inside if');

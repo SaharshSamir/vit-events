@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { getAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { AUTH_ERROR, LOAD_USER } from '../Reducers/type';
 interface errorObj {
 	name?: string;
 	message?: string;
@@ -15,6 +16,8 @@ const OrganizerDashboard = () => {
 	const [user, setUser] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState({} as errorObj);
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		async function getData() {
 			const {
@@ -26,6 +29,11 @@ const OrganizerDashboard = () => {
 			// console.log(resUser);
 			// console.log(resLoading);
 			// console.log(resError);
+
+			dispatch({
+				type: LOAD_USER,
+				payload: resUser
+			});
 			console.log(resUser);
 			setUser(resUser as any);
 			setLoading(resLoading);
