@@ -30,7 +30,7 @@ export const Auth = (state = initialState, action) => {
 		case LOAD_USER:
 			return {
 				...state,
-				user: action.payload.organizerProfile,
+				user: action.payload,
 				isAuthenticated: true,
 				isLoading: false,
 				alreadyExists: false,
