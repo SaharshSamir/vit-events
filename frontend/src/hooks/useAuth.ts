@@ -31,7 +31,7 @@ async function fetcher(route) {
 	return res.data;
 }
 
-const fetchData = async () => {
+const fetchOrganizerData = async () => {
 	const res = await axios.get('/profile/organizer');
 	console.log(res);
 	let response: Data = { data: {}, error: {} };
@@ -55,7 +55,7 @@ export async function getAuth() {
 	// const user = data;
 	// console.log(`error return from useSwr = ${JSON.stringify(error)}`);
 	// const loading = user === undefined;
-	let { data, error } = await fetchData();
+	let { data, error } = await fetchOrganizerData();
 	// data = Promise.resolve(data);
 	console.log(data);
 
@@ -65,6 +65,10 @@ export async function getAuth() {
 		error
 	};
 }
+
+// const fetchStudentData = () => {
+
+// }
 
 export function useStudentAuth() {
 	console.log(localStorage.getItem('token'));
