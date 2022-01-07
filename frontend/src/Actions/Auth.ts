@@ -1,4 +1,3 @@
-import API from '../utils/Api';
 import {
 	STUDENT_SIGNUP,
 	USER_EXISTS,
