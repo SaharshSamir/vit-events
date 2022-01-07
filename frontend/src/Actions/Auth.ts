@@ -7,6 +7,7 @@ import {
 } from '../Reducers/type';
 import setToken from '../utils/setToken';
 
+import axios from 'axios';
 export const loadUser = () => async (dispatch) => {
 	setToken(localStorage.getItem('token'));
 };
@@ -18,11 +19,7 @@ export const studentSignup = (formdata, navigate) => async (dispatch) => {
 				'content-type': 'application/json'
 			}
 		};
-		const res = await API.post(
-			'http://vit-events-api:8000/auth/student/signup',
-			body,
-			config
-		);
+		const res = await axios.post('/auth/student/signup', body, config);
 		console.log(res.data.token);
 		localStorage.setItem('token', res.data.token);
 		dispatch({
@@ -52,11 +49,7 @@ export const LoginAction = (formdata, navigate) => async (dispatch) => {
 				'content-type': 'application/json'
 			}
 		};
-		const res = await API.post(
-			'http://vit-events-api:8000/auth/student/login',
-			body,
-			config
-		);
+		const res = await axios.post('/auth/student/login', body, config);
 		console.log(res.data.token);
 		localStorage.setItem('token', res.data.token);
 		dispatch({
@@ -65,10 +58,10 @@ export const LoginAction = (formdata, navigate) => async (dispatch) => {
 		});
 		navigate('/dashboard/student');
 	} catch (error: any) {
-		console.log(error.response.data.message);
+		console.log(error?.response?.data?.message);
 		dispatch({
 			type: AUTH_ERROR,
-			payload: error.response.data.message
+			payload: error?.response?.data?.message
 		});
 	}
 };
