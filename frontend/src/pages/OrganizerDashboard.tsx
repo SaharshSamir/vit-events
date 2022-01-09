@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { getAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { AUTH_ERROR, LOAD_USER } from '../Reducers/type';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_USER } from '../Reducers/type';
 import styled from 'styled-components';
+//images
 
+import facebook from '../images/facebook.png';
+import instagram from '../images/instagram.png';
+import twitter from '../images/twitter.png';
+import linkedin from '../images/linkedin.png';
 interface errorObj {
 	name?: string;
 	message?: string;
@@ -20,6 +25,7 @@ const OrganizerDashboard = () => {
 	const [error, setError] = useState({} as errorObj);
 	const dispatch = useDispatch();
 	const [name, setName] = useState('');
+	const storeUser = useSelector((store: any) => store.Auth.user);
 	useEffect(() => {
 		async function getData() {
 			const {
@@ -62,12 +68,39 @@ const OrganizerDashboard = () => {
 						</div>
 					</div>
 					<div className="details">
-						<h2>Email</h2>
-						<p>{name}</p>
-						<div className="make">
-							<h2>You Do not have a profile. Please make one here</h2>
-							<Link to="/organizer/addDetail">Add details</Link>
-						</div>
+						<h2>{name}</h2>
+						{!storeUser?.socials ? (
+							<div className="make">
+								<h2>You Do not have a profile. Please make one here</h2>
+								<Link to="/organizer/addDetail">Add details</Link>
+							</div>
+						) : (
+							<div className="bottom-details">
+								<div>
+									<h2>Edit your profile:</h2>
+									<Link to="/organizer/addDetail">Add details</Link>
+								</div>
+								<div className="socials">
+									<div className="email">{storeUser?.email}</div>
+									<p>SOCIALS</p>
+									<div className="social-links">
+										<a href={storeUser?.socials?.facebook}>
+											{' '}
+											<img src={facebook} alt="face" />
+										</a>
+										<a href={storeUser?.socials?.instagram}>
+											<img src={instagram} alt="insta" />
+										</a>
+										<a href={storeUser?.socials?.linkedin}>
+											<img src={linkedin} alt="linked" />
+										</a>
+										<a href={storeUser?.socials?.twitter}>
+											<img src={twitter} alt="twitter" />
+										</a>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
 			)}
@@ -75,10 +108,14 @@ const OrganizerDashboard = () => {
 	);
 };
 const Dash = styled.div`
+	h1 {
+		text-align: center;
+	}
 	.logo {
 		display: flex;
 		justify-content: flex-start;
 		position: relative;
+		margin-top: -2rem;
 	}
 	.logoimg {
 		background-color: #5c97ca;
@@ -97,7 +134,7 @@ const Dash = styled.div`
 		content: '';
 		position: absolute;
 		width: 100%;
-		height: 0.4rem;
+		height: 0.2rem;
 		background-color: black;
 		top: 80%;
 		z-index: -2;
@@ -112,6 +149,37 @@ const Dash = styled.div`
 			padding: 0.4rem;
 			font-size: 1.4rem;
 			text-decoration: none;
+		}
+	}
+	.bottom-details {
+		display: flex;
+		justify-content: space-around;
+		.socials {
+			width: 30%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			padding: 2rem;
+			margin: -2rem;
+			border-left: 4px solid gray;
+			font-size: 1.3rem;
+			.social-links {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 50%;
+				flex-wrap: wrap;
+				a {
+					text-decoration: none;
+					border: none;
+					padding: 1rem;
+				}
+				img {
+					width: 4rem;
+					height: 4rem;
+				}
+			}
 		}
 	}
 `;
