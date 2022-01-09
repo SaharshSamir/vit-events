@@ -10,6 +10,7 @@ import OrganizerDashboard from './pages/OrganizerDashboard';
 import setToken from './utils/setToken';
 import StudentDashboard from './pages/StudentDashboard';
 import OrganzerDetail from './pages/OrganizerDetails';
+import EventForm from './components/EventForm';
 
 const App: React.FC = () => {
 	useEffect(() => {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
 				<Route path="/servertest" element={<ServerTest />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/test" element={<Test />} />
+				<Route path="/addEvent" element={<EventForm />} />
 				<Route path="/dashboard/organizer" element={<OrganizerDashboard />} />
 				<Route path="/organizer/addDetail" element={<OrganzerDetail />} />
 				<Route path="/dashboard/student" element={<StudentDashboard />} />

@@ -1,55 +1,56 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const cookies = require('cookie-parser');
-require("./models/Event/Event");
-require("./models/Accounts/Organizer");
-require("./models/Accounts/Student");
-const authRoutes = require("./routes/Auth");
-const profileRoutes = require("./routes/profiles")
-const eventRoutes = require("./routes/Events")
+require('./models/Event/Event');
+require('./models/Accounts/Organizer');
+require('./models/Accounts/Student');
+const authRoutes = require('./routes/Auth');
+const profileRoutes = require('./routes/profiles');
+const eventRoutes = require('./routes/Events');
 // import keys from './config/keys';
 // const {keys} =  require('./config/keys');
-require("dotenv").config();
+require('dotenv').config();
 
 mongoose.Promise = global.Promise;
 
 const app = express();
 const PORT = process.env.SERVER_PORT || 1000;
 
-console.log("here");
+console.log('here');
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("connected to mongo");
-  })
-  .catch((e: Error) => {
-    console.log(e);
-  });
+	.connect(process.env.MONGO_URI)
+	.then(() => {
+		console.log('connected to mongo');
+	})
+	.catch((e: Error) => {
+		console.log(e);
+	});
 
-  https://expressjs.com/en/resources/middleware/cors.html
-app.options('*', cors());
-app.use(cors({
-  credentials: true,
-  origin: false,
-  exposeHeaders: ["set-cookie"]
-}));
+//expressjs.com/en/resources/middleware/cors.html
+https: app.options('*', cors());
+app.use(
+	cors({
+		credentials: true,
+		origin: false,
+		exposeHeaders: ['set-cookie']
+	})
+);
 app.use(cookies());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use("/auth", authRoutes);
-app.use("/profile", profileRoutes);
-app.use("/event", eventRoutes);
+app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
+app.use('/event', eventRoutes);
 
+app.get('/', (req, res) => {
+	res.send('Helllloooooo another change');
+});
 
-app.get("/", (req, res) => {
-  res.send("Helllloooooo another change");
-})
-
-app.get("/servertest", (req, res) => {
-  return res.json({data: "yay it's working"});
-})
+app.get('/servertest', (req, res) => {
+	return res.json({ data: "yay it's working" });
+});
 
 app.listen(PORT, () => {
-  console.log(`server running on port ${PORT}`);
+	console.log(`server running on port ${PORT}`);
 });

@@ -1,21 +1,42 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import updateOrganizer from '../Actions/Profile';
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 const OrganzerDetail = () => {
+	const user = useSelector((store: any) => store.Auth);
+	const [social, setSocial] = useState({
+		facebook: '',
+		instagram: '',
+		twitter: '',
+		discord: ''
+	});
 	const [data, setData] = useState({
+		organizer_id: user?.user?._id,
+		email: user?.user?.email,
 		name: '',
-		desc: '',
-		linkedIn: '',
-		Instagram: '',
-		Twitter: '',
-		YouTube: ''
+		contactEmail: user?.user?.email,
+		socials: social
 	});
 
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const onChangeHandlerSocials = (e) => {
+		setSocial({ ...social, [e.target.name]: e.target.value });
+		setData({ ...data, socials: social });
+	};
 	const onChangeHandler = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
 	};
-	const onSubmitHandler = (e) => {
+	const onChangeHandlerSocials2 = (e) => {
+		setSocial({ ...social, [e.target.name]: e.target.value });
+		setData({ ...data, socials: social });
+	};
+
+	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 		console.log(data);
+		dispatch(updateOrganizer(data, navigate));
 	};
 	return (
 		<Details>
@@ -23,50 +44,51 @@ const OrganzerDetail = () => {
 				<h2>Add your details</h2>
 				<h4>Name: </h4>
 				<input name="name" onChange={(e) => onChangeHandler(e)} type="text" />
-				<h4>Description of your club</h4>
-				<textarea
+				{/* <h4>Description of your club</h4> */}
+				{/* <textarea
 					name="desc"
 					onChange={(e) => onChangeHandler(e)}
 					id=""
 					rows={5}
-					cols={53}></textarea>
+					cols={53}></textarea> */}
 				<h4>Social media Links</h4>
-				<p>LinkedIn</p>
+				<p>Facebook</p>
 				<input
-					name="linkedIn"
-					onChange={(e) => onChangeHandler(e)}
+					name="facebook"
+					onChange={(e) => onChangeHandlerSocials(e)}
 					type="url"
 					id=""
 				/>
+				<p>Discord</p>
+				<input
+					onChange={(e) => onChangeHandlerSocials(e)}
+					type="url"
+					name="discord"
+					id=""
+				/>
+				<br />
 				<p>Instagram</p>
 				<input
-					onChange={(e) => onChangeHandler(e)}
+					onChange={(e) => onChangeHandlerSocials(e)}
 					type="url"
-					name="Instagram"
+					name="instagram"
 					id=""
 				/>
 				<p>Twitter</p>
 				<input
-					onChange={(e) => onChangeHandler(e)}
+					onChange={(e) => onChangeHandlerSocials2(e)}
 					type="url"
-					name="Twitter"
+					name="twitter"
 					id=""
 				/>
-				<p>YouTube</p>
-				<input
-					onChange={(e) => onChangeHandler(e)}
-					type="url"
-					name="YouTube"
-					id=""
-				/>
-				<br />
+
 				<button onSubmit={(e) => onSubmitHandler(e)}>Submit</button>
 			</form>
 		</Details>
 	);
 };
 
-const Details = styled.div`
+export const Details = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -87,8 +109,7 @@ const Details = styled.div`
 		font-size: 1rem;
 		padding: 0.5rem;
 	}
-	textArea {
-	}
+
 	button {
 		margin-top: 2rem;
 		width: 100%;
@@ -98,6 +119,11 @@ const Details = styled.div`
 		padding: 0.6rem;
 		font-size: 1rem;
 	}
+	@media (max-width: 768px) {
+		form,
+		textarea {
+			width: 80%;
+		}
+	}
 `;
-
 export default OrganzerDetail;

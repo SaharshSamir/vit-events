@@ -3,7 +3,8 @@ import {
 	STUDENT_SIGNUP,
 	USER_EXISTS,
 	LOGIN,
-	LOAD_USER
+	LOAD_USER,
+	UPDATE_ORGANIZER
 } from './type';
 
 const initialState = {
@@ -35,6 +36,10 @@ export const Auth = (state = initialState, action) => {
 				isLoading: false,
 				alreadyExists: false,
 				message: ''
+			};
+		case UPDATE_ORGANIZER:
+			return {
+				...state
 			};
 		case USER_EXISTS:
 			return {
