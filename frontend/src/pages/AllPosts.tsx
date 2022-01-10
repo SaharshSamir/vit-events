@@ -43,6 +43,8 @@ const AllPost = () => {
 						date={event.date}
 						registration={event.registration}
 						color={colors[i % colors.length]}
+						id={event._id}
+						fromAll={true}
 					/>
 				))
 			)}

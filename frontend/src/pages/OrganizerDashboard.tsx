@@ -82,7 +82,7 @@ const OrganizerDashboard = () => {
 						) : (
 							<div className="bottom-details">
 								<div className="events">
-									{Events.length === 0 ? (
+									{Events?.length === 0 ? (
 										<div>
 											<h2>You do not have any events</h2>
 											<p>Make some here: </p>
@@ -91,13 +91,15 @@ const OrganizerDashboard = () => {
 									) : (
 										<div>
 											<h2>Your events:</h2>
-											{Events.map((event, i) => (
+											{Events?.map((event, i) => (
 												<SingleEvent
 													name={event.title}
 													desc={event.description}
 													date={event.date}
 													registration={event.registration}
 													color={colors[i % colors.length]}
+													id={event._id}
+													fromAll={false}
 												/>
 											))}
 										</div>

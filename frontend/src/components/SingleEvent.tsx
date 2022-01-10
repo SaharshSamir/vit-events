@@ -1,8 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import Moment from 'react-moment';
+import bookmark from '../images/bookmark.png';
+import { useDispatch } from 'react-redux';
+import { bookmarkEvent } from '../Actions/Events';
 
-const SingleEvent = ({ name, desc, registration, date, color }) => {
+const SingleEvent = ({
+	name,
+	desc,
+	registration,
+	date,
+	color,
+	id,
+	fromAll
+}) => {
+	const dispatch = useDispatch();
+	console.log(id);
 	return (
 		<Event>
 			<div style={{ backgroundColor: color }} className="main">
@@ -15,6 +28,15 @@ const SingleEvent = ({ name, desc, registration, date, color }) => {
 					<a href={registration} target="_blank">
 						Register here
 					</a>
+					{fromAll && (
+						<div title="bookmark" className="bookmark">
+							<img
+								onClick={() => dispatch(bookmarkEvent(id))}
+								src={bookmark}
+								alt="bookmark"
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		</Event>
@@ -47,15 +69,16 @@ const Event = styled.div`
 		flex-direction: column;
 	}
 	.left {
-		max-width: 80%;
-		width: 80%;
+		max-width: 60%;
+		width: 60%;
 		p {
 			width: 100%;
 			line-break: loose;
 		}
 	}
 	.right {
-		justify-content: space-between;
+		/* justify-content: space-between; */
+
 		a {
 			text-decoration: none;
 			color: black;
@@ -67,6 +90,14 @@ const Event = styled.div`
 		}
 		a:hover {
 			border-radius: 2rem;
+		}
+		.bookmark {
+			img {
+				width: 2rem;
+				height: 2rem;
+				margin-top: 1rem;
+				cursor: pointer;
+			}
 		}
 	}
 `;

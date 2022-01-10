@@ -11,7 +11,7 @@ export const getOrganizer = async (req: any, res: any) => {
 	// const userId = req.userId;
 	// console.log(`req object:\n `);
 	// console.log(req);
-	console.log(req.userId);
+	// console.log(req.userId);
 	let organizerProfile;
 	try {
 		organizerProfile = await Organizer.findById(req.userId);
