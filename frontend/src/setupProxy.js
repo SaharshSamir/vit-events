@@ -13,4 +13,10 @@ module.exports = function (app) {
 			target: 'http://localhost:8000'
 		})
 	);
+	app.use(
+		['/event'],
+		createProxyMiddleware({
+			target: 'http://localhost:8000'
+		})
+	);
 };

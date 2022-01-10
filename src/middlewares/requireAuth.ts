@@ -9,7 +9,6 @@ export const requrieCookieAuth = (req, res, next) => {
 			const decoded = jwt.verify(token, jwtSecret);
 			req.userId = decoded;
 			req.userId = req.userId.userId;
-			console.log(`DECODED TOKEN: \n\n ${JSON.stringify(decoded)}`);
 		}
 		next();
 	} catch (error) {

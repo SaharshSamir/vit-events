@@ -11,11 +11,7 @@ const magic = new Magic(magicSecret);
 
 
 export const organizationAuth = async (req, res) => {
-    console.log("req.body: \n")
     res.removeHeader('Access-Control-Allow-Origin');
-    console.log(req.body);
-    console.log("req.headers: \n")
-    console.log(req.headers);
     const did = magic.utils.parseAuthorizationHeader(req.body.headers.Authorization);
     let user: MagicUserMetadata;
   
