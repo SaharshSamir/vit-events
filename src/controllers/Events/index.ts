@@ -13,29 +13,27 @@ type EventType =
 	  });
 
 export const createEvent = async (req: any, res: any) => {
-	const { title, description, date } = req.body;
-	const organizer_id = req.userId;
-	try {
-		const currentUser = await Organizer.findById(organizer_id);
-		if (currentUser) {
-			let newEvent: EventType = {
-				organizerId: currentUser?._id,
-				title,
-				description,
-				date
-			};
-			newEvent = await Event.create(newEvent);
-			return res.json({ data: { ok: true } });
-		} else {
-			return res
-				.status(200)
-				.json({ ok: false, error: 'You can not upload a new event' });
-		}
-	} catch (error) {
-		console.error(error);
-		return res.status(500).json({ ok: false, error });
-	}
-};
+    const {title, description, date} = req.body;
+    const organizer_id = req.userId;
+    try {
+        const currentUser = await Organizer.findById(organizer_id)
+        if(currentUser){
+            let newEvent:EventType = {
+                _organizer: currentUser?._id,
+                title,
+                description,
+                date
+            }
+            newEvent = await Event.create(newEvent);
+            return res.json({data: {ok: true}})
+        }else {
+            return res.status(200).json({ok: false, error: "You can not upload a new event"})
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(200).json({ok: false, error})
+    }
+}
 
 export const getClubEvents = async (req: any, res: any) => {
 	const { club } = req.query.params;

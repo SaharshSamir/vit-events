@@ -7,6 +7,7 @@ const StudentSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  watchList: {type: Schema.Types.ObjectId, ref: 'Event'}
 });
 
 model<student>("students", StudentSchema);

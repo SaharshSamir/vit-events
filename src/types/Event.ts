@@ -1,5 +1,5 @@
 export interface Event {
-  organizerId: string; 
+  _organizer: string; 
   title: string;
   description: string;
   date: number;
