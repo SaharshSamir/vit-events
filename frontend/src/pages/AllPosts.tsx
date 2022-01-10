@@ -10,7 +10,6 @@ const AllPost = () => {
 	const allEvents = useSelector((store: any) => store.EventReducer.allEvents);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getAllEvents(state));
 		async function getData() {
 			const {
 				user: resUser,
@@ -26,6 +25,7 @@ const AllPost = () => {
 			});
 		}
 		getData();
+		dispatch(getAllEvents(state));
 	}, [state]);
 	const colors = ['#d1efff', '#fffdd1', '#ffd4d1', '#d1ffdb'];
 
