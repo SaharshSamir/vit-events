@@ -1,6 +1,6 @@
 import { POST_SUCCESS } from '../Reducers/type';
 import axios from 'axios';
-import { ALLPOST_SUCCESS } from '../Reducers/type';
+import { ALLPOST_SUCCESS, CLUB_EVENT_SUCCESS } from '../Reducers/type';
 const postEvent = (formData, navigate) => async (dispatch) => {
 	const body = JSON.stringify(formData);
 	const config = {
@@ -10,7 +10,6 @@ const postEvent = (formData, navigate) => async (dispatch) => {
 	};
 	try {
 		const res = await axios.post('/event/create', body, config);
-		console.log(res);
 		dispatch({
 			type: POST_SUCCESS
 		});
@@ -26,6 +25,18 @@ export const getAllEvents = (reqCount) => async (dispatch) => {
 		dispatch({
 			type: ALLPOST_SUCCESS,
 			payload: res.data.allEvents
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+export const getOrganizerEvents = (club) => async (dispatch) => {
+	try {
+		const res = await axios.get(`/event/${club}`);
+		console.log(res);
+		dispatch({
+			type: CLUB_EVENT_SUCCESS,
+			payload: res.data.clubEvents
 		});
 	} catch (e) {
 		console.log(e);

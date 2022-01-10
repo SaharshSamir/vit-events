@@ -4,6 +4,7 @@ import { getAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_USER } from '../Reducers/type';
+import SingleEvent from '../components/SingleEvent';
 import styled from 'styled-components';
 //images
 
@@ -11,6 +12,7 @@ import facebook from '../images/facebook.png';
 import instagram from '../images/instagram.png';
 import twitter from '../images/twitter.png';
 import linkedin from '../images/linkedin.png';
+import { getOrganizerEvents } from '../Actions/Events';
 interface errorObj {
 	name?: string;
 	message?: string;
@@ -26,6 +28,7 @@ const OrganizerDashboard = () => {
 	const dispatch = useDispatch();
 	const [name, setName] = useState('');
 	const storeUser = useSelector((store: any) => store.Auth.user);
+	const Events = useSelector((store: any) => store.EventReducer.clubEvents);
 	useEffect(() => {
 		async function getData() {
 			const {
@@ -45,19 +48,21 @@ const OrganizerDashboard = () => {
 				payload: val1
 			});
 			setUser(resUser as any);
+
 			setLoading(resLoading);
 			setError(resError as any);
 		}
+		dispatch(getOrganizerEvents(storeUser?._id));
+
 		getData();
 	}, []);
 	if (error?.err?.message) {
 		console.log('hey');
 		navigate('/');
 	}
-	console.log(user);
+	const colors = ['#d1efff', '#fffdd1', '#ffd4d1', '#d1ffdb'];
 	return (
 		<Dash>
-			<h1>Dashboard</h1>
 			{loading ? (
 				'Loading...'
 			) : (
@@ -76,9 +81,27 @@ const OrganizerDashboard = () => {
 							</div>
 						) : (
 							<div className="bottom-details">
-								<div>
-									<h2>Edit your profile:</h2>
-									<Link to="/organizer/addDetail">Add details</Link>
+								<div className="events">
+									{Events.length === 0 ? (
+										<div>
+											<h2>You do not have any events</h2>
+											<p>Make some here: </p>
+											<Link to="/addEvent"></Link>
+										</div>
+									) : (
+										<div>
+											<h2>Your events:</h2>
+											{Events.map((event, i) => (
+												<SingleEvent
+													name={event.title}
+													desc={event.description}
+													date={event.date}
+													registration={event.registration}
+													color={colors[i % colors.length]}
+												/>
+											))}
+										</div>
+									)}
 								</div>
 								<div className="socials">
 									<div className="email">{storeUser?.email}</div>
@@ -98,6 +121,8 @@ const OrganizerDashboard = () => {
 											<img src={twitter} alt="twitter" />
 										</a>
 									</div>
+									<h4>Edit your Profile</h4>
+									<Link to="/organizer/addDetail">update</Link>
 								</div>
 							</div>
 						)}
@@ -108,14 +133,11 @@ const OrganizerDashboard = () => {
 	);
 };
 const Dash = styled.div`
-	h1 {
-		text-align: center;
-	}
 	.logo {
 		display: flex;
 		justify-content: flex-start;
 		position: relative;
-		margin-top: -2rem;
+		margin-top: 2rem;
 	}
 	.logoimg {
 		background-color: #5c97ca;
@@ -154,10 +176,13 @@ const Dash = styled.div`
 	.bottom-details {
 		display: flex;
 		justify-content: space-around;
+		.events {
+			width: 40%;
+		}
 		.socials {
 			width: 30%;
 			display: flex;
-			justify-content: center;
+			justify-content: flex-start;
 			align-items: center;
 			flex-direction: column;
 			padding: 2rem;

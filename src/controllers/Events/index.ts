@@ -39,7 +39,8 @@ export const createEvent = async (req: any, res: any) => {
 };
 
 export const getClubEvents = async (req: any, res: any) => {
-	const { club } = req.query.params;
+	const club = req.params.club;
+
 	try {
 		const clubEvents = await Event.find({ name: club });
 		return res.status(200).json({ ok: true, clubEvents: clubEvents });
@@ -51,8 +52,6 @@ export const getClubEvents = async (req: any, res: any) => {
 
 export const getAllEvents = async (req: any, res: any) => {
 	const reqcount = parseInt(req.params.reqcount);
-	console.log(typeof reqcount);
-	console.log(reqcount);
 
 	try {
 		const allEvents = await Event.find({})

@@ -34,6 +34,7 @@ const Event = styled.div`
 		position: relative;
 		padding: 1rem;
 		border-radius: 1rem;
+		flex-wrap: wrap;
 		@media (max-width: 768px) {
 			flex-wrap: wrap;
 		}
