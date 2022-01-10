@@ -59,8 +59,12 @@ const EventForm = () => {
 					type="date"
 					id=""
 				/>
-				<h4>Image of the Event</h4>
-				<input type="file" />
+				<h4>Registration Link</h4>
+				<input
+					name="registration"
+					onChange={(e) => onChangeHandler(e)}
+					type="url"
+				/>
 				<button>Submit</button>
 			</form>
 		</Details>

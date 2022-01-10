@@ -4,7 +4,7 @@ import { requrieCookieAuth } from '../../middlewares/requireAuth';
 
 const Router = express.Router();
 
-Router.get('/all', getAllEvents);
+Router.get('/all/:reqcount', getAllEvents);
 Router.get('/:club', getAllEvents);
 
 Router.post('/create', requrieCookieAuth, createEvent);
