@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
 import { model, ObjectId } from 'mongoose';
 import { Event } from '../../types/Event';
 import { Document } from 'mongoose';
 
 const Organizer = model('organizers');
 const Event = model('events');
+const Student = model('students');
 
 type EventType =
 	| Event
@@ -65,3 +65,15 @@ export const getAllEvents = async (req: any, res: any) => {
 		return res.status(200).json({ ok: false, error });
 	}
 };
+
+export const eventBookmark = async (req:any, res:any) => {
+	console.log(req.studentId);
+	const {event_id} = req.body;
+	try {
+		const newStudent:any = await Student.findByIdAndUpdate(req.studentId, {watchList: event_id}, {new: true});
+		if(newStudent.watchList === event_id) return res.status(200).json({ok: true, newStudent});
+		else throw new Error("Could not set event to watchlist");
+	} catch (error) {
+		res.status(200).json({ok: false, error})
+	}
+}
