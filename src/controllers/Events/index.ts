@@ -13,27 +13,30 @@ type EventType =
 	  });
 
 export const createEvent = async (req: any, res: any) => {
-    const {title, description, date} = req.body;
-    const organizer_id = req.userId;
-    try {
-        const currentUser = await Organizer.findById(organizer_id)
-        if(currentUser){
-            let newEvent:EventType = {
-                _organizer: currentUser?._id,
-                title,
-                description,
-                date
-            }
-            newEvent = await Event.create(newEvent);
-            return res.json({data: {ok: true}})
-        }else {
-            return res.status(200).json({ok: false, error: "You can not upload a new event"})
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(200).json({ok: false, error})
-    }
-}
+	const { title, description, date, registration } = req.body;
+	const organizer_id = req.userId;
+	try {
+		const currentUser = await Organizer.findById(organizer_id);
+		if (currentUser) {
+			let newEvent: EventType = {
+				_organizer: currentUser?._id,
+				title,
+				description,
+				date,
+				registration
+			};
+			newEvent = await Event.create(newEvent);
+			return res.json({ data: { ok: true } });
+		} else {
+			return res
+				.status(200)
+				.json({ ok: false, error: 'You can not upload a new event' });
+		}
+	} catch (error) {
+		console.error(error);
+		return res.status(200).json({ ok: false, error });
+	}
+};
 
 export const getClubEvents = async (req: any, res: any) => {
 	const { club } = req.query.params;
@@ -47,12 +50,15 @@ export const getClubEvents = async (req: any, res: any) => {
 };
 
 export const getAllEvents = async (req: any, res: any) => {
-	const { reqCount } = req.body || 1;
+	const reqcount = parseInt(req.params.reqcount);
+	console.log(typeof reqcount);
+	console.log(reqcount);
 
 	try {
 		const allEvents = await Event.find({})
 			.limit(5)
-			.skip(reqCount * 5);
+			.skip(reqcount * 5);
+		console.log(allEvents);
 		return res.status(200).json({ ok: true, allEvents: allEvents });
 	} catch (error) {
 		console.error(error);
