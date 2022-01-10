@@ -49,7 +49,7 @@ const Slide: React.FC = () => {
 						industry. Lorem Ipsum has been the industry's standard dummy text
 						ever since the 1500s
 					</div>
-					<Link to="/">Browse</Link>
+					<Link to="/getEvents">Browse</Link>
 				</div>
 			</div>
 		</Main>

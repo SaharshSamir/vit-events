@@ -1,4 +1,4 @@
-import { POST_SUCCESS } from '../Reducers/type';
+import { BOOKMARK_SUCCESS, POST_SUCCESS } from '../Reducers/type';
 import axios from 'axios';
 import { ALLPOST_SUCCESS, CLUB_EVENT_SUCCESS } from '../Reducers/type';
 const postEvent = (formData, navigate) => async (dispatch) => {
@@ -37,6 +37,25 @@ export const getOrganizerEvents = (club) => async (dispatch) => {
 		dispatch({
 			type: CLUB_EVENT_SUCCESS,
 			payload: res.data.clubEvents
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+export const bookmarkEvent = (event_id) => async (dispatch) => {
+	console.log('??');
+	const body = JSON.stringify({ event_id: event_id });
+	const config = {
+		headers: {
+			'Content-type': 'application/json'
+		}
+	};
+	try {
+		const res = await axios.post('/event/add/watchlist', body, config);
+		console.log(res);
+		dispatch({
+			type: BOOKMARK_SUCCESS,
+			payload: res.data.newStudent.watchlist
 		});
 	} catch (e) {
 		console.log(e);

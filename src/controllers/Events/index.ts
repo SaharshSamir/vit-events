@@ -57,7 +57,7 @@ export const getAllEvents = async (req: any, res: any) => {
 		const allEvents = await Event.find({})
 			.limit(5)
 			.skip(reqcount * 5);
-		console.log(allEvents);
+		// console.log(allEvents);
 		return res.status(200).json({ ok: true, allEvents: allEvents });
 	} catch (error) {
 		console.error(error);
@@ -65,14 +65,27 @@ export const getAllEvents = async (req: any, res: any) => {
 	}
 };
 
-export const eventBookmark = async (req:any, res:any) => {
-	console.log(req.studentId);
-	const {event_id} = req.body;
+export const eventBookmark = async (req: any, res: any) => {
+	const event_id = req.body.event_id;
+	console.log(req.body);
 	try {
-		const newStudent:any = await Student.findByIdAndUpdate(req.studentId, {watchList: event_id}, {new: true});
-		if(newStudent.watchList === event_id) return res.status(200).json({ok: true, newStudent});
-		else throw new Error("Could not set event to watchlist");
+		const student: any = await Student.findById(req.studentId);
+		const watchList = student.watchList;
+		watchList.push(event_id);
+		const newStudent: any = await Student.findByIdAndUpdate(
+			req.studentId,
+			{ watchList: watchList },
+			{ new: true }
+		);
+		if (
+			JSON.stringify(newStudent.watchList[watchList.length - 1]) ===
+			JSON.stringify(event_id)
+		) {
+			return res.status(200).json({ ok: true, newStudent });
+		} else {
+			throw new Error('Could not set event to watchlist');
+		}
 	} catch (error) {
-		res.status(200).json({ok: false, error})
+		res.status(500).json({ ok: false, error });
 	}
-}
+};
