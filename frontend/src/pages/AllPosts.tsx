@@ -45,6 +45,7 @@ const AllPost = () => {
 						color={colors[i % colors.length]}
 						id={event._id}
 						fromAll={true}
+						fromDashBoard={false}
 					/>
 				))
 			)}

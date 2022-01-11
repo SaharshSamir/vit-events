@@ -1,7 +1,13 @@
-import { ALLPOST_SUCCESS, CLUB_EVENT_SUCCESS, POST_SUCCESS } from './type';
+import {
+	ALLPOST_SUCCESS,
+	BOOKMARK_SUCCESS,
+	CLUB_EVENT_SUCCESS,
+	POST_SUCCESS
+} from './type';
 const initailState = {
 	allEvents: [],
-	clubEvents: []
+	clubEvents: [],
+	bookMark: []
 };
 export const EventReducer = (state = initailState, action) => {
 	switch (action.type) {
@@ -11,6 +17,8 @@ export const EventReducer = (state = initailState, action) => {
 			return { ...state, allEvents: state.allEvents.concat(action.payload) };
 		case CLUB_EVENT_SUCCESS:
 			return { ...state, clubEvents: action.payload };
+		case BOOKMARK_SUCCESS:
+			return { ...state, bookMark: action.payload };
 		default:
 			return state;
 	}

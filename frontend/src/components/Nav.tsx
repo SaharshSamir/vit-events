@@ -22,6 +22,7 @@ const Nav: React.FC = () => {
 				<div className="aboutus">
 					<h4>About Us</h4>
 				</div>
+
 				{!auth.isAuthenticated && (
 					<div className="loginSignup">
 						<h4>

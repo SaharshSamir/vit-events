@@ -100,6 +100,7 @@ const OrganizerDashboard = () => {
 													color={colors[i % colors.length]}
 													id={event._id}
 													fromAll={false}
+													fromDashBoard={false}
 												/>
 											))}
 										</div>

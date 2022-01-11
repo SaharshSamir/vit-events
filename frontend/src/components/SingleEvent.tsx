@@ -12,7 +12,8 @@ const SingleEvent = ({
 	date,
 	color,
 	id,
-	fromAll
+	fromAll,
+	fromDashBoard
 }) => {
 	const dispatch = useDispatch();
 	console.log(id);
@@ -25,10 +26,12 @@ const SingleEvent = ({
 				</div>
 				<div className="right">
 					<Moment format="MMMM Do, YYYY">{date}</Moment>
-					<a href={registration} target="_blank">
-						Register here
-					</a>
-					{fromAll && (
+					{!fromDashBoard && (
+						<a href={registration} target="_blank">
+							Register here
+						</a>
+					)}
+					{fromAll && !fromDashBoard && (
 						<div title="bookmark" className="bookmark">
 							<img
 								onClick={() => dispatch(bookmarkEvent(id))}

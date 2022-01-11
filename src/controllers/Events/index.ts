@@ -70,15 +70,29 @@ export const eventBookmark = async (req: any, res: any) => {
 	console.log(req.body);
 	try {
 		const student: any = await Student.findById(req.studentId);
+		const event: any = await Event.findById(event_id)
+			.select('-_organizer')
+			.select('-regstration');
+
 		const watchList = student.watchList;
-		watchList.push(event_id);
+		const contains = watchList.some((watch) => watch.eventId == event_id);
+		if (contains) {
+			throw new Error('Allready bookmarked');
+		}
+		const newWatch = {
+			eventId: event_id,
+			eventName: event.title,
+			eventDesc: event.description,
+			eventDate: event.date
+		};
+		watchList.push(newWatch);
 		const newStudent: any = await Student.findByIdAndUpdate(
 			req.studentId,
 			{ watchList: watchList },
 			{ new: true }
 		);
 		if (
-			JSON.stringify(newStudent.watchList[watchList.length - 1]) ===
+			JSON.stringify(newStudent.watchList[watchList.length - 1].eventId) ===
 			JSON.stringify(event_id)
 		) {
 			return res.status(200).json({ ok: true, newStudent });
@@ -87,5 +101,14 @@ export const eventBookmark = async (req: any, res: any) => {
 		}
 	} catch (error) {
 		res.status(500).json({ ok: false, error });
+	}
+};
+export const getBookMarks = async (req: any, res: any) => {
+	try {
+		const student: any = await Student.findById(req.studentId);
+		const watchList = student.watchList;
+		res.status(200).json({ ok: true }, watchList);
+	} catch (error) {
+		res.status(500).json({ ok: false }, error);
 	}
 };
