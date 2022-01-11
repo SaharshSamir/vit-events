@@ -55,7 +55,19 @@ export const bookmarkEvent = (event_id) => async (dispatch) => {
 		console.log(res);
 		dispatch({
 			type: BOOKMARK_SUCCESS,
-			payload: res.data.newStudent.watchlist
+			payload: res.data.newStudent.watchList
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+export const getbookmark = () => async (dispatch) => {
+	try {
+		const res = await axios.get('/event/getbookmarks');
+		console.log(res);
+		dispatch({
+			type: BOOKMARK_SUCCESS,
+			payload: res.data
 		});
 	} catch (e) {
 		console.log(e);
