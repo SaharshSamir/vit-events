@@ -74,18 +74,19 @@ export const eventBookmark = async (req: any, res: any) => {
 			.select('-_organizer')
 			.select('-regstration');
 
-		const watchList = student.watchList;
+		let watchList = student.watchList;
 		const contains = watchList.some((watch) => watch.eventId == event_id);
 		if (contains) {
-			throw new Error('Allready bookmarked');
+			watchList = watchList.filter((watch) => watch.eventId != event_id);
+		} else {
+			const newWatch = {
+				eventId: event_id,
+				eventName: event.title,
+				eventDesc: event.description,
+				eventDate: event.date
+			};
+			watchList.push(newWatch);
 		}
-		const newWatch = {
-			eventId: event_id,
-			eventName: event.title,
-			eventDesc: event.description,
-			eventDate: event.date
-		};
-		watchList.push(newWatch);
 		const newStudent: any = await Student.findByIdAndUpdate(
 			req.studentId,
 			{ watchList: watchList },

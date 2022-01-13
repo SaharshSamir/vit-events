@@ -3,28 +3,14 @@ import { getAllEvents } from '../Actions/Events';
 import { useDispatch, useSelector } from 'react-redux';
 import SingleEvent from '../components/SingleEvent';
 import styled from 'styled-components';
-import { getAuth } from '../hooks/useAuth';
+import { getAuth, useStudentAuth } from '../hooks/useAuth';
 import { LOAD_USER } from '../Reducers/type';
 const AllPost = () => {
 	const [state, setState] = useState(0);
 	const allEvents = useSelector((store: any) => store.EventReducer.allEvents);
 	const dispatch = useDispatch();
-	useEffect(() => {
-		async function getData() {
-			const {
-				user: resUser,
-				loading: resLoading,
-				error: resError
-			} = await getAuth();
 
-			const val = resUser as any;
-			const val1 = val.organizerProfile;
-			dispatch({
-				type: LOAD_USER,
-				payload: val1
-			});
-		}
-		getData();
+	useEffect(() => {
 		dispatch(getAllEvents(state));
 	}, [state]);
 	const colors = ['#d1efff', '#fffdd1', '#ffd4d1', '#d1ffdb'];
@@ -36,18 +22,20 @@ const AllPost = () => {
 			{allEvents.length === 0 ? (
 				<p style={{ textAlign: 'center' }}>Loading....</p>
 			) : (
-				allEvents.map((event, i) => (
-					<SingleEvent
-						name={event.title}
-						desc={event.description}
-						date={event.date}
-						registration={event.registration}
-						color={colors[i % colors.length]}
-						id={event._id}
-						fromAll={true}
-						fromDashBoard={false}
-					/>
-				))
+				allEvents.map((event, i) => {
+					return (
+						<SingleEvent
+							name={event.title}
+							desc={event.description}
+							date={event.date}
+							registration={event.registration}
+							color={colors[i % colors.length]}
+							id={event._id}
+							fromAll={true}
+							fromDashBoard={false}
+						/>
+					);
+				})
 			)}
 			<div className="action">
 				<button
