@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import bookmark from '../images/bookmark.png';
-import { useDispatch } from 'react-redux';
+import saved from '../images/saved.png';
+import { useDispatch, useSelector } from 'react-redux';
 import { bookmarkEvent } from '../Actions/Events';
 
 const SingleEvent = ({
@@ -16,6 +17,14 @@ const SingleEvent = ({
 	fromDashBoard
 }) => {
 	const dispatch = useDispatch();
+	const [bookMarked, setBookMarked] = useState(false);
+	const watchList = useSelector((store: any) => store.Auth?.user?.watchList);
+	useEffect(() => {
+		// watchList.map((w) =>
+		// 	w.eventId == id ? setBookMarked(true) : setBookMarked(false)
+		// );
+	}, [id]);
+
 	console.log(id);
 	return (
 		<Event>
@@ -33,11 +42,25 @@ const SingleEvent = ({
 					)}
 					{fromAll && !fromDashBoard && (
 						<div title="bookmark" className="bookmark">
-							<img
-								onClick={() => dispatch(bookmarkEvent(id))}
-								src={bookmark}
-								alt="bookmark"
-							/>
+							{bookMarked ? (
+								<img
+									onClick={() => {
+										dispatch(bookmarkEvent(id));
+										setBookMarked(!bookMarked);
+									}}
+									src={bookmark}
+									alt="bookmark"
+								/>
+							) : (
+								<img
+									onClick={() => {
+										dispatch(bookmarkEvent(id));
+										setBookMarked(!bookMarked);
+									}}
+									src={saved}
+									alt="bookmark"
+								/>
+							)}
 						</div>
 					)}
 				</div>
