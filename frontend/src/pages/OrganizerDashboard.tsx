@@ -82,6 +82,11 @@ const OrganizerDashboard = () => {
 						) : (
 							<div className="bottom-details">
 								<div className="events">
+									<div>
+										<h2>Want to Host an Event?</h2>
+										<Link to="/addEvent">Host an Avent</Link>
+									</div>
+									<br />
 									{Events?.length === 0 ? (
 										<div>
 											<h2>You do not have any events</h2>

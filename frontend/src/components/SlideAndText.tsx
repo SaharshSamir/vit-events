@@ -45,9 +45,10 @@ const Slide: React.FC = () => {
 						VIT<div className="events">EVENTS</div>
 					</div>
 					<div className="desc">
-						Lorem Ipsum is simply dummy text of the printing and typesetting
-						industry. Lorem Ipsum has been the industry's standard dummy text
-						ever since the 1500s
+						A one stop destination for all the happenings in VIT, so that you
+						never miss another event, and just makes your life a little easier!
+						<br />
+						Check out some events here!
 					</div>
 					<Link to="/getEvents">Browse</Link>
 				</div>

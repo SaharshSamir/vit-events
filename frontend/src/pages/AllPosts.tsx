@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { getAllEvents } from '../Actions/Events';
 import { useDispatch, useSelector } from 'react-redux';
 import SingleEvent from '../components/SingleEvent';
@@ -6,9 +6,11 @@ import styled from 'styled-components';
 import { getAuth, useStudentAuth } from '../hooks/useAuth';
 import { LOAD_USER } from '../Reducers/type';
 import setToken from '../utils/setToken';
+import e from 'express';
 const AllPost = () => {
 	const [state, setState] = useState(0);
-	const allEvents = useSelector((store: any) => store.EventReducer.allEvents);
+	let allEvents = useSelector((store: any) => store.EventReducer.allEvents);
+
 	const dispatch = useDispatch();
 	const { user, loading, error } = useStudentAuth();
 	const cookie = document.cookie;
@@ -39,8 +41,12 @@ const AllPost = () => {
 
 		getData();
 	}
+
 	useEffect(() => {
-		dispatch(getAllEvents(state));
+		if (allEvents.length >= state * 5 || allEvents.length < state * 5 + 5) {
+			dispatch(getAllEvents(state));
+		} else {
+		}
 	}, [state]);
 	const colors = ['#d1efff', '#fffdd1', '#ffd4d1', '#d1ffdb'];
 

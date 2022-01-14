@@ -72,6 +72,6 @@ export const Auth = (state = initialState, action) => {
 				alreadyExists: false
 			};
 		default:
-			return initialState;
+			return state;
 	}
 };

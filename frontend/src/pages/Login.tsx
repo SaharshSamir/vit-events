@@ -52,7 +52,7 @@ const Login = () => {
 							required
 						/>
 					</div>
-					<div className="StudOrgan">
+					{/* <div className="StudOrgan">
 						<input
 							onChange={(e) => inputHandler(e)}
 							type="radio"
@@ -70,8 +70,8 @@ const Login = () => {
 							name="type"
 							value="ORGANIZER"
 						/>
-						<label htmlFor="organization">Organizer?</label>
-					</div>
+						<label htmlFor="organization">Organizer?</label> */}
+					{/* </div> */}
 					<div className="message">
 						{auth.message && <h5>{auth.message}</h5>}
 					</div>
@@ -80,6 +80,12 @@ const Login = () => {
 							Login
 						</button>
 					</div>
+					<h4>
+						Are you an Organizer?{' '}
+						<span>
+							<Link to="/test">Login as Organizer</Link>
+						</span>
+					</h4>
 					<h4>
 						Don't have an account?{' '}
 						<span>
@@ -99,7 +105,7 @@ const SignUpStyle = styled.div`
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: #eeeff7;
-	border-bottom: 8px solid #6470c4;
+	border-bottom: 8px solid #000000;
 	padding: 2rem;
 	border-radius: 1rem;
 	@media screen and (max-width: 680px) {
@@ -113,15 +119,15 @@ const SignUpStyle = styled.div`
 			padding: 0.4rem;
 			border-radius: 0.4rem;
 			border: none;
-			box-shadow: 1px 1px 2px #6470c4;
+			box-shadow: 1px 1px 2px #000000;
 		}
 		margin: 1rem;
 	}
 	h2 {
-		color: #6470c4;
+		color: #000000;
 	}
 	button {
-		background-color: #6470c4;
+		background-color: #000000;
 		color: white;
 		padding: 0.4rem;
 		font-size: 15px;
@@ -140,7 +146,7 @@ const SignUpStyle = styled.div`
 		margin: 1rem;
 		span a {
 			text-decoration: none;
-			color: #6470c4;
+			color: #020929;
 		}
 	}
 	.StudOrgan {
