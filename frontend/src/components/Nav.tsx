@@ -1,64 +1,111 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import vitlogo from '../images/vitlogo.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGOUT } from '../Reducers/type';
 
 const Nav: React.FC = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const auth = useSelector((store: any) => store.Auth);
 	const path = location.pathname;
-	console.log(path);
+	const logoutHandler = () => {
+		document.cookie = '';
+		dispatch({
+			type: LOGOUT
+		});
+		navigate('/');
+	};
 	return (
-		<NavStyled
-			style={path !== '/' ? { background: 'black', color: 'white' } : {}}>
-			<div className="left">
-				<div className="logo">
-					<img src={vitlogo} alt="" />
-				</div>
-			</div>
-			<div className="right">
-				<div className="aboutus">
-					<h4>About Us</h4>
-				</div>
-
-				{!auth.isAuthenticated && (
-					<div className="loginSignup">
-						<h4>
-							<Link
-								style={
-									path !== '/' ? { background: 'black', color: 'white' } : {}
-								}
-								to="/login">
-								Login{' '}
-							</Link>
-							<span>or</span>
-							<Link
-								style={
-									path !== '/' ? { background: 'black', color: 'white' } : {}
-								}
-								to="/signup">
-								Signup
-							</Link>
-						</h4>
+		<NavStyled>
+			<div className={path !== '/' ? 'black' : 'white'}>
+				<div className="left">
+					<div className="logo">
+						<img src={vitlogo} alt="" />
 					</div>
-				)}
+				</div>
+				<div className="right">
+					<div className="aboutus">
+						<h4>About Us</h4>
+					</div>
+					{auth.isAuthenticated && (
+						<>
+							<div className="student">
+								<h4>
+									<Link
+										to={
+											localStorage.getItem('token')
+												? `dashboard/student`
+												: `dashboard/organizer`
+										}>
+										DashBoard
+									</Link>
+								</h4>
+							</div>
+
+							<div onClick={logoutHandler} className="logout">
+								<h4>Log Out</h4>
+							</div>
+						</>
+					)}
+
+					{!auth.isAuthenticated && (
+						<div className="loginSignup">
+							<h4>
+								<Link
+									style={
+										path !== '/' ? { background: 'black', color: 'white' } : {}
+									}
+									to="/login">
+									Login{' '}
+								</Link>
+								<span>or</span>
+								<Link
+									style={
+										path !== '/' ? { background: 'black', color: 'white' } : {}
+									}
+									to="/signup">
+									Signup
+								</Link>
+							</h4>
+						</div>
+					)}
+				</div>
 			</div>
 		</NavStyled>
 	);
 };
 
 const NavStyled = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	position: relative;
-	border-radius: 0 0 1rem 1rem;
-	z-index: 2;
+	.black,
+	.white {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		position: relative;
+		border-radius: 0 0 1rem 1rem;
+		z-index: 2;
+	}
+	.black {
+		background-color: black;
+		color: white;
+		a {
+			color: white;
+		}
+	}
+	.white {
+		a {
+			color: black;
+		}
+	}
+	.logout {
+		cursor: pointer;
+	}
 	a {
 		text-decoration: none;
-		color: black;
 	}
 	img {
 		height: 4rem;

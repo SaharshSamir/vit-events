@@ -18,11 +18,13 @@ import { LOAD_USER } from './Reducers/type';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
+	setToken(localStorage.getItem('token'));
 	const { user, loading, error } = useStudentAuth();
-	console.log(document.cookie);
 	const cookie = document.cookie;
-	const isOrgAuth = cookie.split(' ')[1].split('=')[1];
+	const isOrgAuth = cookie?.split(' ')[1]?.split('=')[1];
+	console.log(user?.user);
 	if (user?.user) {
+		console.log('here');
 		setToken(localStorage.getItem('token'));
 		dispatch({
 			type: LOAD_USER,

@@ -20,7 +20,7 @@ const SingleEvent = ({
 	const [bookMarked, setBookMarked] = useState(false);
 	const watchList = useSelector((store: any) => store.Auth?.user?.watchList);
 	useEffect(() => {
-		// watchList.map((w) =>
+		// watchList?.map((w) =>
 		// 	w.eventId == id ? setBookMarked(true) : setBookMarked(false)
 		// );
 	}, [id]);

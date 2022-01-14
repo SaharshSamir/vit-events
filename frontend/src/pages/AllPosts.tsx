@@ -5,11 +5,40 @@ import SingleEvent from '../components/SingleEvent';
 import styled from 'styled-components';
 import { getAuth, useStudentAuth } from '../hooks/useAuth';
 import { LOAD_USER } from '../Reducers/type';
+import setToken from '../utils/setToken';
 const AllPost = () => {
 	const [state, setState] = useState(0);
 	const allEvents = useSelector((store: any) => store.EventReducer.allEvents);
 	const dispatch = useDispatch();
+	const { user, loading, error } = useStudentAuth();
+	const cookie = document.cookie;
+	const isOrgAuth = cookie?.split(' ')[1]?.split('=')[1];
+	console.log(user?.user);
+	if (user?.user && localStorage.getItem('token')) {
+		setToken(localStorage.getItem('token'));
+		dispatch({
+			type: LOAD_USER,
+			payload: user?.user
+		});
+	} else if (isOrgAuth) {
+		const getData = async () => {
+			const {
+				user: resUser,
+				loading: resLoading,
+				error: resError
+			} = await getAuth();
 
+			const val = resUser as any;
+			const val1 = val.organizerProfile;
+			dispatch({
+				type: LOAD_USER,
+				payload: val1
+			});
+			localStorage.removeItem('token');
+		};
+
+		getData();
+	}
 	useEffect(() => {
 		dispatch(getAllEvents(state));
 	}, [state]);
@@ -45,6 +74,8 @@ const AllPost = () => {
 					Load more..
 				</button>
 			</div>
+			<br />
+			<br />
 		</AllEvents>
 	);
 };
@@ -61,6 +92,7 @@ const AllEvents = styled.div`
 		border: 2px solid black;
 		padding: 0.4rem;
 		font-size: 1.4rem;
+		cursor: pointer;
 	}
 `;
 export default AllPost;
