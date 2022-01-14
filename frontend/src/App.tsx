@@ -22,6 +22,7 @@ const App: React.FC = () => {
 	const { user, loading, error } = useStudentAuth();
 	const cookie = document.cookie;
 	const isOrgAuth = cookie?.split(' ')[1]?.split('=')[1];
+	console.log(isOrgAuth);
 	console.log(user?.user);
 	if (user?.user) {
 		console.log('here');

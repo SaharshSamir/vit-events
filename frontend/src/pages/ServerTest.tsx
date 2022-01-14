@@ -18,7 +18,7 @@ const ServerTest: React.FC = () => {
 	return (
 		<React.Fragment>
 			<button onClick={(e) => handleClick(e)}>Click Me</button>
-			{res ? <p>{JSON.stringify(res.data)}</p> : <p>Loading...</p>}
+			{res ? <p></p> : <p>Loading...</p>}
 		</React.Fragment>
 	);
 };

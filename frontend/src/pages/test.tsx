@@ -56,7 +56,6 @@ const Test: React.FC = () => {
 			<Container>
 				<HeaderContainer>
 					<Header>Organization Sign Up</Header>
-					{JSON.stringify(process.env)}
 				</HeaderContainer>
 				<FormContainer onSubmit={submitHandler}>
 					<Label>Email</Label>
@@ -85,6 +84,7 @@ const Header = styled.p`
 	font-size: 2.5rem;
 	font-weight: bold;
 	margin-left: 30px;
+	text-align: center;
 `;
 
 const FormContainer = styled.form`
@@ -93,8 +93,8 @@ const FormContainer = styled.form`
 	display: flex;
 	flex-direction: column;
 	width: max-content;
-	/* align-items: center;
-	justify-content: center; */
+	align-items: center;
+	justify-content: center;
 `;
 
 const Label = styled.p`
@@ -115,13 +115,12 @@ const InputField = styled.input`
 const SubmitButton = styled.button`
 	border-style: none;
 	background-color: #3e43b0;
-	padding: 4px;
 	border-radius: 5px;
 	color: white;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 	margin: 5px 55px;
-	padding: 5px 0;
 	cursor: pointer;
+	padding: 0.6rem 2.8rem;
 	&:hover {
 		background-color: #656ac9;
 	}

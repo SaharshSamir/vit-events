@@ -13,7 +13,8 @@ const Nav: React.FC = () => {
 	const auth = useSelector((store: any) => store.Auth);
 	const path = location.pathname;
 	const logoutHandler = () => {
-		document.cookie = '';
+		document.cookie = `api_token=; max-age=0`;
+		document.cookie = 'is_auth=false';
 		dispatch({
 			type: LOGOUT
 		});
@@ -24,13 +25,18 @@ const Nav: React.FC = () => {
 			<div className={path !== '/' ? 'black' : 'white'}>
 				<div className="left">
 					<div className="logo">
-						<img src={vitlogo} alt="" />
+						<Link to="/">
+							<img src={vitlogo} alt="" />
+						</Link>
 					</div>
 				</div>
 				<div className="right">
-					<div className="aboutus">
+					{/* <div className="aboutus">
 						<h4>About Us</h4>
-					</div>
+					</div> */}
+					<h4>
+						<Link to="/getEvents">Browse Events</Link>
+					</h4>
 					{auth.isAuthenticated && (
 						<>
 							<div className="student">
