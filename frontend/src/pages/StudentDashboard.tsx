@@ -35,7 +35,7 @@ const StudentDashboard: React.FC = () => {
 						<h2>Email: </h2>
 						<p>{user.user.email}</p>
 						<div className="browse">
-							<Link to="/">Browse Events</Link>
+							<Link to="/getEvents">Browse Events</Link>
 						</div>
 					</div>
 				)}

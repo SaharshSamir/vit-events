@@ -4,7 +4,8 @@ import {
 	USER_EXISTS,
 	LOGIN,
 	LOAD_USER,
-	UPDATE_ORGANIZER
+	UPDATE_ORGANIZER,
+	LOGOUT
 } from './type';
 
 const initialState = {
@@ -31,6 +32,7 @@ export const Auth = (state = initialState, action) => {
 		case LOAD_USER:
 			return {
 				...state,
+				token: localStorage.getItem('token'),
 				user: action.payload,
 				isAuthenticated: true,
 				isLoading: false,
@@ -47,6 +49,7 @@ export const Auth = (state = initialState, action) => {
 				isLoading: false,
 				alreadyExists: true
 			};
+
 		case AUTH_ERROR:
 			localStorage.removeItem('token');
 			return {
@@ -57,6 +60,16 @@ export const Auth = (state = initialState, action) => {
 				isAuthenticated: false,
 				alreadyExists: false,
 				message: action.payload
+			};
+		case LOGOUT:
+			localStorage.removeItem('token');
+			return {
+				...state,
+				token: null,
+				isLoading: false,
+				user: null,
+				isAuthenticated: false,
+				alreadyExists: false
 			};
 		default:
 			return initialState;
