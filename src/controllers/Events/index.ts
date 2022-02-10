@@ -42,7 +42,7 @@ export const getClubEvents = async (req: any, res: any) => {
 	const club = req.params.club;
 
 	try {
-		const clubEvents = await Event.find({ name: club });
+		const clubEvents = await Event.find({ _organizer: club });
 		return res.status(200).json({ ok: true, clubEvents: clubEvents });
 	} catch (error) {
 		console.error(error);

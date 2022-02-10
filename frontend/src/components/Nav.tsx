@@ -47,7 +47,7 @@ const Nav: React.FC = () => {
 												? `dashboard/student`
 												: `dashboard/organizer`
 										}>
-										DashBoard
+										User Dashboard
 									</Link>
 								</h4>
 							</div>
